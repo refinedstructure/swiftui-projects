@@ -1,0 +1,274 @@
+//
+//  ContentView.swift
+//  BMICalc
+//
+//  Created by Abhishek Rane on 20/05/24.
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    @State private var weight = 0.0
+    let weightUnits = ["kilos", "pounds"]
+    @State private var selectedWeightUnit = ""
+    
+    @State private var height = 0.0
+    let heightUnits = ["cms", "inches"]
+    @State private var selectedHeightUnit = ""
+    
+    
+    @State private var unitsSelected = false
+    @State private var resultsDisplayed = false
+    @State private var unitsMatch = false
+    
+    @State private var alertTitle = ""
+    @State private var alertText = ""
+    
+    @State private var latestBMI:Double = 0.0
+    
+    //HISTORY
+    @State private var bmiHistory = [Double]()
+    @State private var dates = [Date]()
+    
+    @State private var calculatePressed = false
+    
+    
+    
+    var body:some View {
+        
+        VStack
+        {
+            Text("BMI Calculator")
+                .font(.title)
+        }
+
+        ZStack{
+            
+            
+            VStack {
+                Form{
+                    Section("Weight") {
+                        TextField("Enter your weight", value:$weight, format:.number)
+                            .keyboardType(.decimalPad)
+                    }
+                    Section("Select Weight Units") {
+                        Picker("", selection: $selectedWeightUnit)
+                        {
+                            ForEach(weightUnits, id: \.self){
+                                Text($0)
+                            }
+                            
+                        }.pickerStyle(.segmented)
+                    }
+                    Section("Height") {
+                        TextField("Enter your height", value:$height, format:.number)
+                            .keyboardType(.decimalPad)
+                        
+                    }
+                    Section("Select Height Units"){
+                        Picker("", selection:$selectedHeightUnit){
+                            ForEach(heightUnits, id: \.self){
+                                Text($0)
+                            }
+                            
+                            
+                            
+                        }.pickerStyle(.segmented)
+                    }
+                        
+                        if (bmiHistory.count > 0 ){
+                            Section("BMI History") {
+                                List {
+
+                                    ForEach(bmiHistory, id: \.self) {record in
+                                        HStack{
+                                            Image(systemName: ".pencil.and.list.clipboard")
+                                            Text(String(format: "%.2f", record))
+
+                                        }
+                                    
+                                        
+                                    }
+                                }
+                            }
+                        }
+                        
+                        
+                
+                }
+            }
+
+  
+            
+            VStack{
+                
+              
+                
+         
+                
+//
+                
+                Spacer()
+  
+                HStack {
+                    Button("Reset"){
+                        
+                    }.buttonStyle(BorderedProminentButtonStyle())
+                        .padding(5)
+                    Button("Calculate")
+                    {
+                        
+                        unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                        unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                        
+                        calculatePressed = true
+            
+                        if (height == 0 || weight == 0)
+                        {
+                            var whatIsEmpty = ""
+                            if (weight == 0 && height > 0) {
+                            whatIsEmpty = "weight"
+                            }
+                            else if (height == 0 && weight > 0 ) {
+                                whatIsEmpty = "height"
+                            }
+                            else {
+                                whatIsEmpty = "height and weight"
+                            }
+                            
+                            alertTitle = "\(whatIsEmpty) can't be empty"
+                            alertText = "Please enter \(whatIsEmpty)"
+ 
+                        }
+                        else if (unitsSelected == false)
+                        {
+                            alertTitle = "Select all units"
+                            alertText = "Make sure both units are selected"
+                        }
+                        
+                        else if(unitsMatch == false && unitsSelected == true) {
+                            
+                            var desiredHeightUnit = ""
+                            if(selectedWeightUnit == "kilos") {
+                                desiredHeightUnit = "cms"
+                            }
+                            else{
+                                desiredHeightUnit = "inches"
+                            }
+                            
+                            alertTitle = "Check units"
+                            alertText = "If your weight is in \(selectedWeightUnit), height should be in \(desiredHeightUnit)"
+                        }
+                               
+                        else if (unitsMatch == true && unitsSelected == true){
+                            alertTitle = "IT WORKED"
+                            latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
+                            alertText = "Your BMI is \(latestBMI)"
+                        }
+                        
+                    }.buttonStyle(BorderedProminentButtonStyle())
+                        .padding(5)
+                        .alert(alertText, isPresented: $calculatePressed)
+                    {
+                        Button("ok",role:.cancel) {
+                            storeBMIs(bmi: latestBMI)
+                            latestBMI = 0.0
+                            calculatePressed = false
+                        }
+                    }
+                    
+                }
+                
+                
+            }
+            
+        }
+        
+    }
+    
+    func areUnitsPicked(heightUnits:String, weightUnits:String) -> Bool{
+        var unitStatus = true
+        if(heightUnits == "" || weightUnits == ""){
+            unitStatus = false
+        }
+        else {
+            unitStatus = true
+        }
+        return unitStatus
+    }
+    
+
+    func doUnitsMatch(heightUnits:String, weightUnits:String) -> Bool {
+        
+        var unitsCorrect = false
+        if (heightUnits == "cms" && weightUnits == "kilos") {
+           unitsCorrect = true
+        }
+        else if (heightUnits == "inches" && weightUnits == "pounds"){
+            unitsCorrect = true
+        }
+        else{
+            unitsCorrect = false
+        }
+        return unitsCorrect
+    }
+    
+    func calculateBMI( height: Double, weight:Double, weightUnit: String) -> Double
+    {
+//        var alertText = ""
+        var bmi = 0.0
+        if(weightUnit == "kilos") {
+            
+            bmi = ((weight)/((height/100) * (height/100)))
+            bmi = round(bmi * 100)/100.0
+            
+//            alertText = "Your BMI is \(bmi)"
+
+        }
+        else if (weightUnit == "pounds")
+        {
+            
+            bmi = ((weight)/(height * height)) * 703
+            bmi = round(bmi * 100)/100.0
+            
+//            alertText = "Your BMI is \(bmi)"
+        }
+        return bmi
+    }
+    
+    func storeBMIs(bmi:Double){
+        
+        guard bmi > 0 else {return}
+        
+        withAnimation{
+            bmiHistory.insert(bmi, at: 0)
+            dates.insert(Date.now, at:0)
+        }
+    }
+    
+    
+
+    
+}
+    
+    
+    //    return  round(703 * (weight/(height * height)))
+    
+    
+
+    
+  
+
+
+
+#Preview {
+    ContentView()
+}
+
+
+//
+//BMI Categories:
+//Underweight = <18.5
+//Normal weight = 18.5–24.9
+//Overweight = 25–29.9
+//Obesity = BMI of 30 or greater
