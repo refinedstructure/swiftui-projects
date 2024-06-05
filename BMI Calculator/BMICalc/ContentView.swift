@@ -83,7 +83,9 @@ struct ContentView: View {
                                     ForEach(bmiHistory, id: \.self) {record in
                                         HStack{
                                             Text(String(format: "%.2f", record))
-                                            Text(Date.now, format: .dateTime.day().month().year())
+                                            
+                                            Text(Date.now, format: .dateTime.day().month().year().hour())                                 
+                                          
                                             Text(bmiClass(bmi: record))
                                         }
                                     }
