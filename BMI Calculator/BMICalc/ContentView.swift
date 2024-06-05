@@ -36,17 +36,17 @@ struct ContentView: View {
     
     var body:some View {
         
-        VStack
-        {
-            Text("BMI Calculator")
-                .font(.title)
-        }
+        
 
         ZStack{
-            
-            
             VStack {
+                VStack{
+                    Text("BMI Calculator")
+                        .font(.title)
+                }
+       
                 Form{
+                    
                     Section("Weight") {
                         TextField("Enter your weight", value:$weight, format:.number)
                             .keyboardType(.decimalPad)
@@ -84,7 +84,7 @@ struct ContentView: View {
                                         HStack{
                                             Text(String(format: "%.2f", record))
                                             
-                                            Text(Date.now, format: .dateTime.day().month().year().hour())                                 
+                                            Text(Date.now, format: .dateTime.day().month().year().hour())
                                           
                                             Text(bmiClass(bmi: record))
                                         }
@@ -107,7 +107,10 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     Button("Reset"){
-                        
+                        selectedHeightUnit = ""
+                        selectedWeightUnit = ""
+                        height = 0.0
+                        weight = 0.0
                     }.buttonStyle(BorderedProminentButtonStyle())
                         .padding(5)
                     Button("Calculate")
