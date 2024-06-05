@@ -79,18 +79,19 @@ struct ContentView: View {
                         if (bmiHistory.count > 0 ){
                             Section("BMI History") {
                                 List {
-
+                                    
                                     ForEach(bmiHistory, id: \.self) {record in
                                         HStack{
                                             Text(String(format: "%.2f", record))
                                             Text(Date.now, format: .dateTime.day().month().year())
-                                          Text(bmiClass(bmi: record))
+                                            Text(bmiClass(bmi: record))
                                         }
                                     }
                                 }
-
-                                
+ 
                             }
+                   
+
                         }
                         
                         
@@ -207,15 +208,12 @@ struct ContentView: View {
     
     func calculateBMI( height: Double, weight:Double, weightUnit: String) -> Double
     {
-//        var alertText = ""
         var bmi = 0.0
         if(weightUnit == "kilos") {
             
             bmi = ((weight)/((height/100) * (height/100)))
             bmi = round(bmi * 100)/100.0
-            
-//            alertText = "Your BMI is \(bmi)"
-
+        
         }
         else if (weightUnit == "pounds")
         {
