@@ -77,7 +77,7 @@ struct ContentView: View {
                     }
                         
                         if (bmiHistory.count > 0 ){
-                            Section("BMI History") {
+                            Section("BMI History (last 3)") {
                                 List {
                                     
                                     ForEach(bmiHistory, id: \.self) {record in
@@ -233,6 +233,11 @@ struct ContentView: View {
         withAnimation{
             bmiHistory.insert(bmi, at: 0)
             dates.insert(Date.now, at:0)
+            if (bmiHistory.count > 3 && dates.count > 3){
+                bmiHistory.removeLast()
+                dates.removeLast()
+
+            }
         }
     }
     
