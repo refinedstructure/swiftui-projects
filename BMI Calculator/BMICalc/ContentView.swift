@@ -82,14 +82,14 @@ struct ContentView: View {
 
                                     ForEach(bmiHistory, id: \.self) {record in
                                         HStack{
-                                            Image(systemName: ".pencil.and.list.clipboard")
                                             Text(String(format: "%.2f", record))
-
+                                            Text(Date.now, format: .dateTime.day().month().year())
+                                          Text(bmiClass(bmi: record))
                                         }
-                                    
-                                        
                                     }
                                 }
+
+                                
                             }
                         }
                         
@@ -101,15 +101,7 @@ struct ContentView: View {
   
             
             VStack{
-                
-              
-                
-         
-                
-//
-                
                 Spacer()
-  
                 HStack {
                     Button("Reset"){
                         
@@ -161,7 +153,7 @@ struct ContentView: View {
                         }
                                
                         else if (unitsMatch == true && unitsSelected == true){
-                            alertTitle = "IT WORKED"
+                            alertTitle = "BMI"
                             latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
                             alertText = "Your BMI is \(latestBMI)"
                         }
@@ -246,19 +238,28 @@ struct ContentView: View {
         }
     }
     
+    func bmiClass(bmi:Double)-> String{
+        var bmiClass = ""
+        switch bmi {
+        case 0...18.5:
+            bmiClass = "Underweight"
+        case 18.5...24.9:
+            bmiClass = "Normal weight"
+        case 25...29.9:
+            bmiClass = "Overweight"
+        case 30...100:
+            bmiClass = "Obese"
+        default:
+            bmiClass = "No category"
+        }
+        return bmiClass
+    }
+    
     
 
     
 }
     
-    
-    //    return  round(703 * (weight/(height * height)))
-    
-    
-
-    
-  
-
 
 
 #Preview {
