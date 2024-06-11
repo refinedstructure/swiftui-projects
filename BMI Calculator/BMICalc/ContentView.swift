@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var weight = 0.0
     let weightUnits = ["kilos", "pounds"]
+    
     @State private var selectedWeightUnit = ""
     
     @State private var height = 0.0
@@ -35,154 +36,151 @@ struct ContentView: View {
     
     
     var body:some View {
-        
-        
-
-        ZStack{
-            VStack {
-                VStack{
+    
+            ZStack{
+                VStack {
                     Text("BMI Calculator")
-                        .font(.title)
-                }
-       
-                Form{
                     
-                    Section("Weight") {
-                        TextField("Enter your weight", value:$weight, format:.number)
-                            .keyboardType(.decimalPad)
-                    }
-                    Section("Select Weight Units") {
-                        Picker("", selection: $selectedWeightUnit)
-                        {
-                            ForEach(weightUnits, id: \.self){
-                                Text($0)
-                            }
-                            
-                        }.pickerStyle(.segmented)
-                    }
-                    Section("Height") {
-                        TextField("Enter your height", value:$height, format:.number)
-                            .keyboardType(.decimalPad)
+                    Form{
                         
-                    }
-                    Section("Select Height Units"){
-                        Picker("", selection:$selectedHeightUnit){
-                            ForEach(heightUnits, id: \.self){
-                                Text($0)
-                            }
+                        Section("Weight") {
+                            TextField("Enter your weight", value:$weight, format:.number)
+                                .keyboardType(.decimalPad)
+                        }
+                        Section("Select Weight Units") {
+                            Picker("", selection: $selectedWeightUnit)
+                            {
+                                ForEach(weightUnits, id: \.self){
+                                    Text($0)
+                                }
+                                
+                            }.pickerStyle(.segmented)
+                        }
+                        Section("Height") {
+                            TextField("Enter your height", value:$height, format:.number)
+                                .keyboardType(.decimalPad)
                             
+                        }
+                        Section("Select Height Units"){
+                            Picker("", selection:$selectedHeightUnit){
+                                ForEach(heightUnits, id: \.self){
+                                    Text($0)
+                                }
+                                
+                            }.pickerStyle(.segmented)
                             
-                            
-                        }.pickerStyle(.segmented)
-                    }
+                        }
                         
                         if (bmiHistory.count > 0 ){
                             Section("BMI History (last 3)") {
                                 List {
-                                    
                                     ForEach(bmiHistory, id: \.self) {record in
                                         HStack{
                                             Text(String(format: "%.2f", record))
-                                            
+                                            Divider()
                                             Text(Date.now, format: .dateTime.day().month().year().hour())
-                                          
+                                            Divider()
                                             Text(bmiClass(bmi: record))
                                         }
                                     }
                                 }
- 
                             }
-                   
-
+                            
+                            
                         }
                         
                         
+                    }}
                 
-                }
-            }
-
-  
-            
-            VStack{
-                Spacer()
-                HStack {
-                    Button("Reset"){
-                        selectedHeightUnit = ""
-                        selectedWeightUnit = ""
-                        height = 0.0
-                        weight = 0.0
-                    }.buttonStyle(BorderedProminentButtonStyle())
-                        .padding(5)
-                    Button("Calculate")
-                    {
-                        
-                        unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                        unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                        
-                        calculatePressed = true
-            
-                        if (height == 0 || weight == 0)
+                VStack{
+                    Spacer()
+                    HStack {
+                        Button("Calculate", systemImage: "play.fill")
                         {
-                            var whatIsEmpty = ""
-                            if (weight == 0 && height > 0) {
-                            whatIsEmpty = "weight"
+                            
+                            unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                            unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                            
+                            calculatePressed = true
+                            
+                            if (height == 0 || weight == 0)
+                            {
+                                var whatIsEmpty = ""
+                                if (weight == 0 && height > 0) {
+                                    whatIsEmpty = "weight"
+                                }
+                                else if (height == 0 && weight > 0 ) {
+                                    whatIsEmpty = "height"
+                                }
+                                else {
+                                    whatIsEmpty = "height and weight"
+                                }
+                                
+                                alertTitle = "\(whatIsEmpty) can't be empty"
+                                alertText = "Please enter \(whatIsEmpty)"
+                                
                             }
-                            else if (height == 0 && weight > 0 ) {
-                                whatIsEmpty = "height"
-                            }
-                            else {
-                                whatIsEmpty = "height and weight"
+                            else if (unitsSelected == false)
+                            {
+                                alertTitle = "Select all units"
+                                alertText = "Make sure both units are selected"
                             }
                             
-                            alertTitle = "\(whatIsEmpty) can't be empty"
-                            alertText = "Please enter \(whatIsEmpty)"
- 
+                            else if(unitsMatch == false && unitsSelected == true) {
+                                
+                                var desiredHeightUnit = ""
+                                if(selectedWeightUnit == "kilos") {
+                                    desiredHeightUnit = "cms"
+                                }
+                                else{
+                                    desiredHeightUnit = "inches"
+                                }
+                                
+                                alertTitle = "Check units"
+                                alertText = "If your weight is in \(selectedWeightUnit), height should be in \(desiredHeightUnit)"
+                            }
+                            
+                            else if (unitsMatch == true && unitsSelected == true){
+                                alertTitle = "BMI"
+                                latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
+                                alertText = "Your BMI is \(latestBMI)"
+                            }
+                            
                         }
-                        else if (unitsSelected == false)
+                        .buttonStyle(.bordered)
+    
+                            .foregroundColor(Color(red:54/255.0, green:54/255.0, blue:54/255.0))
+                            .controlSize(.large)
+                            .background(Color.clear)
+                            .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.gray), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 5.0))
+                            
+                             .padding(15)
+                            .alert(alertText, isPresented: $calculatePressed)
                         {
-                            alertTitle = "Select all units"
-                            alertText = "Make sure both units are selected"
+                            Button("ok",role:.cancel) {
+                                storeBMIs(bmi: latestBMI)
+                                latestBMI = 0.0
+                                calculatePressed = false
+                                resetFields()
+                            }
                         }
                         
-                        else if(unitsMatch == false && unitsSelected == true) {
-                            
-                            var desiredHeightUnit = ""
-                            if(selectedWeightUnit == "kilos") {
-                                desiredHeightUnit = "cms"
-                            }
-                            else{
-                                desiredHeightUnit = "inches"
-                            }
-                            
-                            alertTitle = "Check units"
-                            alertText = "If your weight is in \(selectedWeightUnit), height should be in \(desiredHeightUnit)"
-                        }
-                               
-                        else if (unitsMatch == true && unitsSelected == true){
-                            alertTitle = "BMI"
-                            latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
-                            alertText = "Your BMI is \(latestBMI)"
-                        }
-                        
-                    }.buttonStyle(BorderedProminentButtonStyle())
-                        .padding(5)
-                        .alert(alertText, isPresented: $calculatePressed)
-                    {
-                        Button("ok",role:.cancel) {
-                            storeBMIs(bmi: latestBMI)
-                            latestBMI = 0.0
-                            calculatePressed = false
-                        }
                     }
                     
                 }
                 
-                
             }
             
         }
-        
+    
+
+    func resetFields() {
+        selectedHeightUnit = ""
+        selectedWeightUnit = ""
+        height = 0.0
+        weight = 0.0
     }
+    
     
     func areUnitsPicked(heightUnits:String, weightUnits:String) -> Bool{
         var unitStatus = true
