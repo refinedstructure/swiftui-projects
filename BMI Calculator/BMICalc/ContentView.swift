@@ -77,16 +77,12 @@ struct ContentView: View {
                                     ForEach(bmiHistory, id: \.self) {record in
                                         HStack{
                                             Text(String(format: "%.2f", record))
-                                            Divider()
-                                            Text(Date.now, format: .dateTime.day().month().year().hour())
-                                            Divider()
+                                            Text(Date.now, format: .dateTime.day().month().year())
                                             Text(bmiClass(bmi: record))
                                         }
                                     }
                                 }
                             }
-                            
-                            
                         }
                         
                         
@@ -147,14 +143,13 @@ struct ContentView: View {
                             }
                             
                         }
-                        .buttonStyle(.bordered)
-    
-                            .foregroundColor(Color(red:54/255.0, green:54/255.0, blue:54/255.0))
+                        .buttonStyle(BorderedButtonStyle())
+                        .clipShape(Capsule())
+                            .foregroundColor(.black)
+                            .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.systemBlue), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 4.0))
                             .controlSize(.large)
-                            .background(Color.clear)
-                            .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.gray), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 5.0))
-                            
                              .padding(15)
+
                             .alert(alertText, isPresented: $calculatePressed)
                         {
                             Button("ok",role:.cancel) {
@@ -163,7 +158,9 @@ struct ContentView: View {
                                 calculatePressed = false
                                 resetFields()
                             }
+
                         }
+
                         
                     }
                     
