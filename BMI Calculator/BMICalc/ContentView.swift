@@ -39,9 +39,15 @@ struct ContentView: View {
     
             ZStack{
                 VStack {
-                    Text("BMI Calculator")
-                    
+           
                     Form{
+                            Text("BMI Calculator")
+                                .listRowBackground(Color.clear)
+                                .font(.largeTitle)
+                                .fontWidth(.standard)
+                                .fontDesign(.serif)
+                                .foregroundStyle(.blue.gradient)
+                            
                         
                         Section("Weight") {
                             TextField("Enter your weight", value:$weight, format:.number)
@@ -55,6 +61,7 @@ struct ContentView: View {
                                 }
                                 
                             }.pickerStyle(.segmented)
+                            
                         }
                         Section("Height") {
                             TextField("Enter your height", value:$height, format:.number)
@@ -86,10 +93,17 @@ struct ContentView: View {
                         }
                         
                         
-                    }}
+                    }
+                    
+                    
+                }
+//                .background(LinearGradient(colors: [Color(.red), Color(.black), Color(.white)], startPoint: .bottomLeading, endPoint: .topTrailing))
+
                 
                 VStack{
+    
                     Spacer()
+
                     HStack {
                         Button("Calculate", systemImage: "play.fill")
                         {
@@ -140,6 +154,8 @@ struct ContentView: View {
                                 alertTitle = "BMI"
                                 latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
                                 alertText = "Your BMI is \(latestBMI)"
+//                                RESET THE FIELDS WHEN calculation is done
+                                resetFields()
                             }
                             
                         }
@@ -156,7 +172,7 @@ struct ContentView: View {
                                 storeBMIs(bmi: latestBMI)
                                 latestBMI = 0.0
                                 calculatePressed = false
-                                resetFields()
+                               
                             }
 
                         }
