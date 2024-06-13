@@ -46,8 +46,9 @@ struct ContentView: View {
                                 .font(.title)
                                 .fontWidth(.standard)
                                 .fontDesign(.serif)
-                                .foregroundStyle(.brown.gradient)
-                            
+                                .foregroundStyle(.blue.gradient)
+                                .frame(maxWidth:.infinity, alignment: .center)
+                                .background(.clear)
                         
                         Section("Weight") {
                             TextField("Enter your weight", value:$weight, format:.number)
@@ -88,10 +89,10 @@ struct ContentView: View {
                                             Text(Date.now, format: .dateTime.day().month().year())
                                             Text(String(format: "%.2f", record))
                                             Text(bmiClass(bmi: record))
+                                       
                                             Button("", systemImage:"trash.circle"){
                                                 bmiHistory.remove(at: bmiHistory.firstIndex(of: record) ?? 0)
                                             }
-
                                            }
 
                                         
@@ -177,7 +178,7 @@ struct ContentView: View {
                         .buttonStyle(BorderedButtonStyle())
                         .clipShape(Capsule())
                             .foregroundColor(.black)
-                            .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.systemBlue), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 4.0))
+                            .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
                             .controlSize(.large)
                              .padding(10)
                         
@@ -185,12 +186,10 @@ struct ContentView: View {
                         {
                             Button("ok",role:.cancel) {
                                 
-                                withAnimation(.smooth){
-                                    
                                     storeBMIs(bmi: latestBMI)
                                     latestBMI = 0.0
                                     calculatePressed = false
-                                }
+                                
                             }
 
                         }
@@ -288,7 +287,7 @@ struct ContentView: View {
         case 30...100:
             bmiClass = "Obese"
         default:
-            bmiClass = "No category"
+            bmiClass = "NA"
         }
         return bmiClass
     }
