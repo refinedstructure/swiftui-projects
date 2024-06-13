@@ -17,7 +17,6 @@ struct ContentView: View {
     let heightUnits = ["cms", "inches"]
     @State private var selectedHeightUnit = ""
     
-    
     @State private var unitsSelected = false
     @State private var resultsDisplayed = false
     @State private var unitsMatch = false
@@ -33,6 +32,7 @@ struct ContentView: View {
     
     @State private var calculatePressed = false
     
+    @State private var showHistory = false
     
     
     var body:some View {
@@ -43,10 +43,10 @@ struct ContentView: View {
                     Form{
                             Text("BMI Calculator")
                                 .listRowBackground(Color.clear)
-                                .font(.largeTitle)
+                                .font(.title)
                                 .fontWidth(.standard)
                                 .fontDesign(.serif)
-                                .foregroundStyle(.blue.gradient)
+                                .foregroundStyle(.brown.gradient)
                             
                         
                         Section("Weight") {
@@ -61,11 +61,13 @@ struct ContentView: View {
                                 }
                                 
                             }.pickerStyle(.segmented)
+
                             
                         }
                         Section("Height") {
                             TextField("Enter your height", value:$height, format:.number)
                                 .keyboardType(.decimalPad)
+                            
                             
                         }
                         Section("Select Height Units"){
@@ -78,18 +80,22 @@ struct ContentView: View {
                             
                         }
                         
-                        if (bmiHistory.count > 0 ){
+                        if showHistory {
                             Section("BMI History (last 3)") {
                                 List {
                                     ForEach(bmiHistory, id: \.self) {record in
                                         HStack{
-                                            Text(String(format: "%.2f", record))
                                             Text(Date.now, format: .dateTime.day().month().year())
+                                            Text(String(format: "%.2f", record))
                                             Text(bmiClass(bmi: record))
-                                        }
+                                                                                }
                                     }
                                 }
+                                
+                  
+                                
                             }
+
                         }
                         
                         
@@ -97,7 +103,7 @@ struct ContentView: View {
                     
                     
                 }
-//                .background(LinearGradient(colors: [Color(.red), Color(.black), Color(.white)], startPoint: .bottomLeading, endPoint: .topTrailing))
+
 
                 
                 VStack{
@@ -107,7 +113,6 @@ struct ContentView: View {
                     HStack {
                         Button("Calculate", systemImage: "play.fill")
                         {
-                            
                             unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
                             unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
                             
@@ -153,8 +158,9 @@ struct ContentView: View {
                             else if (unitsMatch == true && unitsSelected == true){
                                 alertTitle = "BMI"
                                 latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
-                                alertText = "Your BMI is \(latestBMI)"
-//                                RESET THE FIELDS WHEN calculation is done
+                                     alertText = "Your BMI is \(latestBMI)"
+                                    //                                RESET THE FIELDS WHEN calculation is done
+                                
                                 resetFields()
                             }
                             
@@ -164,15 +170,18 @@ struct ContentView: View {
                             .foregroundColor(.black)
                             .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.systemBlue), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 4.0))
                             .controlSize(.large)
-                             .padding(15)
-
+                             .padding(10)
+                        
                             .alert(alertText, isPresented: $calculatePressed)
                         {
                             Button("ok",role:.cancel) {
-                                storeBMIs(bmi: latestBMI)
-                                latestBMI = 0.0
-                                calculatePressed = false
-                               
+                                
+                                withAnimation(.smooth){
+                                    
+                                    storeBMIs(bmi: latestBMI)
+                                    latestBMI = 0.0
+                                    calculatePressed = false
+                                }
                             }
 
                         }
@@ -190,8 +199,8 @@ struct ContentView: View {
     func resetFields() {
         selectedHeightUnit = ""
         selectedWeightUnit = ""
-        height = 0.0
-        weight = 0.0
+//        height = 0.0
+//        weight = 0.0
     }
     
     
@@ -237,7 +246,6 @@ struct ContentView: View {
             bmi = ((weight)/(height * height)) * 703
             bmi = round(bmi * 100)/100.0
             
-//            alertText = "Your BMI is \(bmi)"
         }
         return bmi
     }
@@ -246,15 +254,17 @@ struct ContentView: View {
         
         guard bmi > 0 else {return}
         
-        withAnimation{
             bmiHistory.insert(bmi, at: 0)
             dates.insert(Date.now, at:0)
+        
             if (bmiHistory.count > 3 && dates.count > 3){
                 bmiHistory.removeLast()
                 dates.removeLast()
-
             }
-        }
+        if (bmiHistory.count > 0 ){
+            withAnimation{
+                showHistory = true
+            }}
     }
     
     func bmiClass(bmi:Double)-> String{
