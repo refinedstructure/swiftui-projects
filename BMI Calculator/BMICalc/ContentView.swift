@@ -88,7 +88,16 @@ struct ContentView: View {
                                             Text(Date.now, format: .dateTime.day().month().year())
                                             Text(String(format: "%.2f", record))
                                             Text(bmiClass(bmi: record))
-                                                                                }
+                                            Button("", systemImage:"trash.circle"){
+                                                bmiHistory.remove(at: bmiHistory.firstIndex(of: record) ?? 0)
+                                            }
+
+                                           }
+
+                                        
+                                        
+                                        
+                           
                                     }
                                 }
                                 
