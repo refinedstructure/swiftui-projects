@@ -45,30 +45,41 @@ struct ContentView: View {
                                 .listRowBackground(Color.clear)
                                 .font(.title)
                                 .fontWidth(.standard)
-                                .fontDesign(.serif)
                                 .foregroundStyle(.blue.gradient)
                                 .frame(maxWidth:.infinity, alignment: .center)
                                 .background(.clear)
                         
                         Section("Weight") {
-                            TextField("Enter your weight", value:$weight, format:.number)
-                                .keyboardType(.decimalPad)
+                            
+                            HStack {
+                                TextField("Enter your weight", value:$weight, format:.number)
+                                    .keyboardType(.decimalPad)
+                                Text(selectedWeightUnit)
+                                    .font(.caption)
+                            }
                         }
                         Section("Select Weight Units") {
-                            Picker("", selection: $selectedWeightUnit)
-                            {
-                                ForEach(weightUnits, id: \.self){
-                                    Text($0)
-                                }
+                            
+                      
+                                Picker("", selection: $selectedWeightUnit)
+                                {
+                                    ForEach(weightUnits, id: \.self){
+                                        Text($0)
+                                    }
+                                    
+                                }.pickerStyle(.segmented)
                                 
-                            }.pickerStyle(.segmented)
 
                             
                         }
                         Section("Height") {
-                            TextField("Enter your height", value:$height, format:.number)
-                                .keyboardType(.decimalPad)
                             
+                            HStack {
+                                TextField("Enter your height", value:$height, format:.number)
+                                    .keyboardType(.decimalPad)
+                                Text(selectedHeightUnit)
+                                    .font(.caption)
+                            }
                             
                         }
                         Section("Select Height Units"){
@@ -95,8 +106,6 @@ struct ContentView: View {
                                             }
                                            }
 
-                                        
-                                        
                                         
                            
                                     }
@@ -168,7 +177,11 @@ struct ContentView: View {
                             else if (unitsMatch == true && unitsSelected == true){
                                 alertTitle = "BMI"
                                 latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
-                                     alertText = "Your BMI is \(latestBMI)"
+                                     alertText = """
+                                Your BMI is \(latestBMI).
+                                Weight: \(weight), \(selectedWeightUnit).
+                                Height:\(height) \(selectedHeightUnit)
+                                """
                                     //                                RESET THE FIELDS WHEN calculation is done
                                 
                                 resetFields()
