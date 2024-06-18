@@ -12,15 +12,15 @@ import SwiftUI
 struct historyView: View {
     @Environment(\.dismiss) var dismiss
     var body: some View{
-       
-        Button("",systemImage: "chevron.down") {
             
-            dismiss()
+            VStack {
+                Button("",systemImage: "chevron.down") {
+                    
+                    dismiss()
+                }
+            }
+          
         }
-        Text("BMI History").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-            
-        
-    }
 }
 
 
@@ -65,143 +65,147 @@ struct ContentView: View {
     @State private var zeroFields = [Bool]()
     
     var body:some View {
-    
-            ZStack{
-                VStack {
-           
-                    Form{
-                        Text("BMI Calculator")
-                            .listRowBackground(Color.clear)
-                            .font(.title)
-                            .fontWidth(.standard)
-                            .foregroundStyle(.blue.gradient)
-                            .frame(maxWidth:.infinity, alignment: .center)
-                            .background(.clear)
-                        
-                        Section("Weight") {
-                            
-                            HStack {
-                                TextField("Enter your weight", value:$weight, format:.number)
-                                    .keyboardType(.decimalPad)
-                                Text(selectedWeightUnit)
-                                    .font(.caption)
-                            }
-                        }
-                        Section("Select Weight Units") {
-                            Picker("", selection: $selectedWeightUnit)
-                            {
-                                ForEach(weightUnits, id: \.self){
-                                    Text($0)
-                                }
-                                
-                            }.pickerStyle(.segmented)
-                            
-                            
-                            
-                        }
-                        Section("Height") {
-                            
-                            HStack {
-                                TextField("Enter your height", value:$height, format:.number)
-                                    .keyboardType(.decimalPad)
-                                Text(selectedHeightUnit)
-                                    .font(.caption)
-                            }
-                            
-                        }
-                        Section("Select Height Units"){
-                            Picker("", selection:$selectedHeightUnit){
-                                ForEach(heightUnits, id: \.self){
-                                    Text($0)
-                                }
-                                
-                            }.pickerStyle(.segmented)
-                            
-                        }
-
-                    }
-
-                   
-                        
-//                      
-                 
-                        Button("Show History", systemImage: "chart.bar")
-                        {
-                            showingHistory.toggle()
-                            
-                        }.sheet(isPresented: $showingHistory){
-                            
-                            historyView()
-                            
-                            List {
-                                
-                                ForEach(bmiHistory, id: \.self) {record in
-                                    HStack{
-                                        Text(Date.now, format: .dateTime.day().month().year())
-                                        Text(String(format: "%.2f", record))
-                                        Text(bmiClass(bmi: record))
-                                        
-                                        Button("", systemImage:"trash.circle"){
-                                            bmiHistory.remove(at: bmiHistory.firstIndex(of: record) ?? 0)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        
-                        Button("Calculate", systemImage: "play.fill")
-                        {
-                            
-                            unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                            unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                            
-                            //                            PENDING - ZERO VALUES on weight and height
-                            
-                            
-                            
-                            if (unitsSelected && unitsMatch)
-                            {
-                                latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
-                                calculatePressed = true
-                                alertText = "Your BMI is \(latestBMI)"
-                                resetFields()
-                            }
-                            
-                            
-                        }
-                        .buttonStyle(BorderedButtonStyle())
-                        .clipShape(Capsule())
-                        .foregroundColor(.black)
-                        .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
-                        .controlSize(.large)
-                        .padding(10)
-                        
-                        .alert(alertText, isPresented: $calculatePressed)
-                        {
-                            Button("ok",role:.cancel) {
-                                storeBMIs(bmi: latestBMI)
-                                latestBMI = 0.0
-                                calculatePressed = false
-                                
-                            }
-                            
-                        }
+        
+        ZStack{
+            VStack {
+                
+                Form{
+                    Text("BMI Calculator")
+                        .listRowBackground(Color.clear)
+                        .font(.title)
+                        .fontWidth(.standard)
+                        .foregroundStyle(.blue.gradient)
+                        .frame(maxWidth:.infinity, alignment: .center)
+                        .background(.clear)
                     
-
-
+                    Section("Weight") {
+                        
+                        HStack {
+                            TextField("Enter your weight", value:$weight, format:.number)
+                                .keyboardType(.decimalPad)
+                            Text(selectedWeightUnit)
+                                .font(.caption)
                         }
-                           
+                    }
+                    Section("Select Weight Units") {
+                        Picker("", selection: $selectedWeightUnit)
+                        {
+                            ForEach(weightUnits, id: \.self){
+                                Text($0)
+                            }
+                            
+                        }.pickerStyle(.segmented)
+                        
+                        
+                        
+                    }
+                    Section("Height") {
+                        
+                        HStack {
+                            TextField("Enter your height", value:$height, format:.number)
+                                .keyboardType(.decimalPad)
+                            Text(selectedHeightUnit)
+                                .font(.caption)
+                        }
+                        
+                    }
+                    Section("Select Height Units"){
+                        Picker("", selection:$selectedHeightUnit){
+                            ForEach(heightUnits, id: \.self){
+                                Text($0)
+                            }
+                            
+                        }.pickerStyle(.segmented)
+                        
+                    }
+                    
                 }
+                
+                
+                
+                //
+                
+                Button("Show History", systemImage: "chart.bar")
+                {
+                    showingHistory.toggle()
+                    
+                }.sheet(isPresented: $showingHistory){
+                    
+                    NavigationStack{
+                        Text("BMI History").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        historyView()
+                        
+                        List {
+                            
+                            ForEach(bmiHistory, id: \.self) {record in
+                                HStack{
+                                    Text(Date.now, format: .dateTime.day().month().year())
+                                    Text(String(format: "%.2f", record))
+                                    Text(bmiClass(bmi: record))
+                                    
+                                }
+                            }.onDelete(perform: deleteRecords)
+                        }.toolbar{
+                            EditButton()
+                        }
+                    }
                 }
-     
+           
+            
+            
+            Button("Calculate", systemImage: "play.fill")
+            {
+                
+                unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                
+                //                            PENDING - ZERO VALUES on weight and height
+                
+                
+                
+                if (unitsSelected && unitsMatch)
+                {
+                    latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
+                    calculatePressed = true
+                    alertText = "Your BMI is \(latestBMI)"
+                    resetFields()
+                }
+                
+                
+            }
+            
+            .buttonStyle(BorderedButtonStyle())
+            .clipShape(Capsule())
+            .foregroundColor(.black)
+            .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
+            .controlSize(.large)
+            .padding(10)
+            }
+            
+            .alert(alertText, isPresented: $calculatePressed)
+            {
+                Button("ok",role:.cancel) {
+                    storeBMIs(bmi: latestBMI)
+                    latestBMI = 0.0
+                    calculatePressed = false
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }
+    
     
     
     func resetFields() {
         selectedHeightUnit = ""
         selectedWeightUnit = ""
-//        height = 0.0
-//        weight = 0.0
+        //        height = 0.0
+        //        weight = 0.0
     }
     
     func findZeroFields(height: Double, weight:Double) -> Array<Bool>
@@ -219,7 +223,7 @@ struct ContentView: View {
         
         return emptyFields
     }
-        
+    
     
     func areUnitsPicked(heightUnits:String, weightUnits:String) -> Bool{
         var unitStatus = true
@@ -232,12 +236,12 @@ struct ContentView: View {
         return unitStatus
     }
     
-
+    
     func doUnitsMatch(heightUnits:String, weightUnits:String) -> Bool {
         
         var unitsCorrect = false
         if (heightUnits == "cms" && weightUnits == "kilos") {
-           unitsCorrect = true
+            unitsCorrect = true
         }
         else if (heightUnits == "inches" && weightUnits == "pounds"){
             unitsCorrect = true
@@ -255,7 +259,7 @@ struct ContentView: View {
             
             bmi = ((weight)/((height/100) * (height/100)))
             bmi = round(bmi * 100)/100.0
-        
+            
         }
         else if (weightUnit == "pounds")
         {
@@ -271,17 +275,18 @@ struct ContentView: View {
         
         guard bmi > 0 else {return}
         
-            bmiHistory.insert(bmi, at: 0)
-            dates.insert(Date.now, at:0)
+        bmiHistory.insert(bmi, at: 0)
+        dates.insert(Date.now, at:0)
         
-            if (bmiHistory.count > 3 && dates.count > 3){
-                bmiHistory.removeLast()
-                dates.removeLast()
-            }
+        
         if (bmiHistory.count > 0 ){
             withAnimation{
                 showHistory = true
             }}
+    }
+    
+    func deleteRecords(at offsets:IndexSet){
+        bmiHistory.remove(atOffsets: offsets)
     }
     
     func bmiClass(bmi:Double)-> String{
@@ -301,7 +306,7 @@ struct ContentView: View {
         return bmiClass
     }
     
-    
+
 
     
 }
