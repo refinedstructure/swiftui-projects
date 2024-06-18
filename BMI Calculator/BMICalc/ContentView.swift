@@ -27,14 +27,14 @@ struct historyView: View {
 
 
 struct ContentView: View {
-    @State private var weight = 0.0
+    @AppStorage("weight") private var weight = 0.0
     let weightUnits = ["kilos", "pounds"]
     
-    @State private var selectedWeightUnit = ""
+    @AppStorage("weightUnits") private var selectedWeightUnit = ""
     
-    @State private var height = 0.0
+    @AppStorage("height") private var height = 0.0
     let heightUnits = ["cms", "inches"]
-    @State private var selectedHeightUnit = ""
+    @AppStorage("heightUnits") private var selectedHeightUnit = ""
     
     @State private var unitsSelected = false
     @State private var resultsDisplayed = false
