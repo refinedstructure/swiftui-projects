@@ -8,6 +8,20 @@
 import SwiftUI
 
 
+struct bmiHistoryRecords:Identifiable{
+    let id = UUID()
+    let weightCaptured:Double
+    let heightCaptured:Double
+    let weightUnitsCaptured:String
+    let heightUnitsCaptured: String
+    let bmiCaptured: Double
+    let bmiClassCaptured: String
+}
+
+@Observable
+class bmiRecordItems {
+    var records = [bmiHistoryRecords]()
+}
 
 struct historyView: View {
     @Environment(\.dismiss) var dismiss
@@ -15,7 +29,6 @@ struct historyView: View {
             
             VStack {
                 Button("",systemImage: "chevron.down") {
-                    
                     dismiss()
                 }
             }
@@ -27,6 +40,7 @@ struct historyView: View {
 
 
 struct ContentView: View {
+    
     @AppStorage("weight") private var weight = 0.0
     let weightUnits = ["kilos", "pounds"]
     
@@ -46,8 +60,8 @@ struct ContentView: View {
     @State private var latestBMI:Double = 0.0
     
     //HISTORY
-    @State private var bmiHistory = [Double]()
-    @State private var dates = [Date]()
+    
+    @State private var bmiRecords = bmiRecordItems()
     
     @State private var calculatePressed = false
     
@@ -60,7 +74,7 @@ struct ContentView: View {
     
     @State private var showingHistory = false
     
-    @State private var cardFront = false
+
     
     @State private var zeroFields = [Bool]()
     
@@ -132,23 +146,22 @@ struct ContentView: View {
                 }.sheet(isPresented: $showingHistory){
                     
                     NavigationStack{
-                        Text("BMI History").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         historyView()
-                        
                         List {
-                            
-                            ForEach(bmiHistory, id: \.self) {record in
+                            ForEach(bmiRecords.records) { record in
                                 HStack{
-                                    Text(Date.now, format: .dateTime.day().month().year())
-                                    Text(String(format: "%.2f", record))
-                                    Text(bmiClass(bmi: record))
-                                    
+                                    Text(String(record.bmiCaptured))
+                                    Text(record.bmiClassCaptured)
                                 }
-                            }.onDelete(perform: deleteRecords)
-                        }.toolbar{
+                            }
+                          
+                            .onDelete(perform: deleteRecords)
+                        }
+                        
+                        .toolbar{
                             EditButton()
                         }
-                    }
+                    }  .navigationTitle("BMI History")
                 }
            
             
@@ -168,6 +181,8 @@ struct ContentView: View {
                     latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
                     calculatePressed = true
                     alertText = "Your BMI is \(latestBMI)"
+                    //ADD TO BMI HISTORY NEW
+                    
                     resetFields()
                 }
                 
@@ -184,8 +199,10 @@ struct ContentView: View {
             
             .alert(alertText, isPresented: $calculatePressed)
             {
-                Button("ok",role:.cancel) {
-                    storeBMIs(bmi: latestBMI)
+                Button("Okay",role:.cancel) {
+
+                    let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI))
+                    bmiRecords.records.append(savedRecord)
                     latestBMI = 0.0
                     calculatePressed = false
                     
@@ -271,22 +288,9 @@ struct ContentView: View {
         return bmi
     }
     
-    func storeBMIs(bmi:Double){
-        
-        guard bmi > 0 else {return}
-        
-        bmiHistory.insert(bmi, at: 0)
-        dates.insert(Date.now, at:0)
-        
-        
-        if (bmiHistory.count > 0 ){
-            withAnimation{
-                showHistory = true
-            }}
-    }
     
     func deleteRecords(at offsets:IndexSet){
-        bmiHistory.remove(atOffsets: offsets)
+        bmiRecords.records.remove(atOffsets: offsets)
     }
     
     func bmiClass(bmi:Double)-> String{
