@@ -85,7 +85,7 @@ struct ContentView: View {
     
     var body:some View {
         
-        ZStack{
+       
             VStack {
                 
                 Form{
@@ -138,9 +138,9 @@ struct ContentView: View {
                         
                     }
                     
-                    
-                }
+               
                 
+                }
                 
                 
                 HStack{
@@ -157,7 +157,7 @@ struct ContentView: View {
                     .buttonStyle(BorderedButtonStyle())
                     .clipShape(Capsule())
                     .foregroundColor(.black)
-                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
+                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.blue), Color(.gray), Color(.blue)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
                     .controlSize(.large)
                     .padding(10)
                     
@@ -203,19 +203,21 @@ struct ContentView: View {
                     Button("Okay",role:.cancel) {
                         
                         let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI), bmiDateCaptured: Date())
-                        bmiRecords.records.append(savedRecord)
+                        bmiRecords.records.insert(savedRecord, at: 0)
                         latestBMI = 0.0
                         calculatePressed = false
                         
                     }
                     
                 }
+                    
+           
                 
-                
-                
-            }}
+            }
+            
+        }
         
-    }
+    
     
     
     

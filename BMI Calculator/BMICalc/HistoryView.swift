@@ -10,7 +10,6 @@ import SwiftUI
 struct HistoryView: View {
     @Environment(\.dismiss) var dismiss
     
-    
     @State private var bmiRecords = bmiRecordItems()
     
     var body: some View {
