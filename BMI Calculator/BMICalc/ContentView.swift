@@ -8,35 +8,42 @@
 import SwiftUI
 
 
-struct bmiHistoryRecords:Identifiable{
-    let id = UUID()
+struct bmiHistoryRecords:Identifiable, Codable{
+    var id = UUID()
     let weightCaptured:Double
     let heightCaptured:Double
     let weightUnitsCaptured:String
     let heightUnitsCaptured: String
     let bmiCaptured: Double
     let bmiClassCaptured: String
+    let bmiDateCaptured:Date
 }
 
 @Observable
 class bmiRecordItems {
-    var records = [bmiHistoryRecords]()
-}
-
-struct historyView: View {
-    @Environment(\.dismiss) var dismiss
-    var body: some View{
-            
-            VStack {
-                Button("",systemImage: "chevron.down") {
-                    dismiss()
-                }
+    var records = [bmiHistoryRecords]() {
+        didSet {
+            if let encoded = try?
+                JSONEncoder().encode(records) {
+                UserDefaults.standard.set(encoded,
+                                          forKey: "Records")
             }
-          
+        }
+    }
+    
+    init() {
+        if let savedRecords =
+            UserDefaults.standard.data(forKey: "Records") {
+            if let decodedItems = try?
+                JSONDecoder().decode(
+                    [bmiHistoryRecords].self, from:
+                        savedRecords) {
+                records = decodedItems
+                return
+            }
         }
 }
-
-
+}
 
 
 struct ContentView: View {
@@ -64,8 +71,6 @@ struct ContentView: View {
     @State private var bmiRecords = bmiRecordItems()
     
     @State private var calculatePressed = false
-    
-    @State private var showHistory = false
     
     @State private var heightEmpty = true
     @State private var weightEmpty = true
@@ -133,86 +138,82 @@ struct ContentView: View {
                         
                     }
                     
+                    
                 }
                 
                 
                 
-                //
-                
-                Button("Show History", systemImage: "chart.bar")
-                {
-                    showingHistory.toggle()
+                HStack{
                     
-                }.sheet(isPresented: $showingHistory){
                     
-                    NavigationStack{
-                        historyView()
-                        List {
-                            ForEach(bmiRecords.records) { record in
-                                HStack{
-                                    Text(String(record.bmiCaptured))
-                                    Text(record.bmiClassCaptured)
-                                }
-                            }
-                          
-                            .onDelete(perform: deleteRecords)
+                    Button("History", systemImage: "chart.bar")
+                    {
+                        showingHistory.toggle()
+                        
+                    }.sheet(isPresented: $showingHistory){
+                        
+                        HistoryView()
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                    .clipShape(Capsule())
+                    .foregroundColor(.black)
+                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
+                    .controlSize(.large)
+                    .padding(10)
+                    
+                    
+                    
+                    //
+                    
+                    
+                    Button("Calculate", systemImage: "play.fill")
+                    {
+                        
+                        
+                        unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                        unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                        
+                        //                            PENDING - ZERO VALUES on weight and height
+                        
+                        
+                        
+                        if (unitsSelected && unitsMatch)
+                        {
+                            latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
+                            calculatePressed = true
+                            alertText = "Your BMI is \(latestBMI)"
+                            //ADD TO BMI HISTORY NEW
+                            
+                            resetFields()
                         }
                         
-                        .toolbar{
-                            EditButton()
-                        }
-                    }  .navigationTitle("BMI History")
+                        
+                    }
+                    
+                    .buttonStyle(BorderedButtonStyle())
+                    .clipShape(Capsule())
+                    .foregroundColor(.black)
+                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
+                    .controlSize(.large)
+                    .padding(10)
                 }
-           
-            
-            
-            Button("Calculate", systemImage: "play.fill")
-            {
                 
-                unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                
-                //                            PENDING - ZERO VALUES on weight and height
-                
-                
-                
-                if (unitsSelected && unitsMatch)
+                .alert(alertText, isPresented: $calculatePressed)
                 {
-                    latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
-                    calculatePressed = true
-                    alertText = "Your BMI is \(latestBMI)"
-                    //ADD TO BMI HISTORY NEW
-                    
-                    resetFields()
-                }
-                
-                
-            }
-            
-            .buttonStyle(BorderedButtonStyle())
-            .clipShape(Capsule())
-            .foregroundColor(.black)
-            .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
-            .controlSize(.large)
-            .padding(10)
-            }
-            
-            .alert(alertText, isPresented: $calculatePressed)
-            {
-                Button("Okay",role:.cancel) {
-
-                    let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI))
-                    bmiRecords.records.append(savedRecord)
-                    latestBMI = 0.0
-                    calculatePressed = false
+                    Button("Okay",role:.cancel) {
+                        
+                        let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI), bmiDateCaptured: Date())
+                        bmiRecords.records.append(savedRecord)
+                        latestBMI = 0.0
+                        calculatePressed = false
+                        
+                    }
                     
                 }
                 
-            }
-            
-            
-            
-        }
+                
+                
+            }}
         
     }
     
@@ -289,9 +290,7 @@ struct ContentView: View {
     }
     
     
-    func deleteRecords(at offsets:IndexSet){
-        bmiRecords.records.remove(atOffsets: offsets)
-    }
+
     
     func bmiClass(bmi:Double)-> String{
         var bmiClass = ""
