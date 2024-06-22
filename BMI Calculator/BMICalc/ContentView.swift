@@ -77,6 +77,7 @@ struct ContentView: View {
     @State private var weightEmpty = true
     @State private var heightNotSelected = true
     @State private var weightNotSelected = true
+    @State private var areValuesNotZero = false
     
     @State private var zeroFields = [Bool]()
     
@@ -129,12 +130,8 @@ struct ContentView: View {
                             }
                             
                         }.pickerStyle(.segmented)
-                        
                     }
-                    
-               
-                
-                }
+        }
                 
                 HStack{
                     Button("History", systemImage: "chart.bar")
@@ -155,9 +152,12 @@ struct ContentView: View {
                     {
                         unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
                         unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                        
+                        areValuesNotZero = areValuesNotZero(height: height, weight: weight)
+                        
                         //                            PENDING - ZERO VALUES on weight and height
                         
-                        if (unitsSelected && unitsMatch)
+                        if (unitsSelected && unitsMatch && areValuesNotZero)
                         {
                             latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
                             calculatePressed = true
@@ -165,11 +165,8 @@ struct ContentView: View {
                             Your BMI: \(latestBMI)
                             Your BMI class: \(bmiClass(bmi: latestBMI))
                             """
-                        
-                         
-                        }
-                        
-                        
+                          }
+                
                     }
                     
                     .buttonStyle(BorderedButtonStyle())
@@ -196,16 +193,11 @@ struct ContentView: View {
             message: {
                 Text(alertText)
             }
-                    
-           
-                
+       
             }
-            
+
         }
-        
-    
-    
-    
+
     
     func resetFields() {
         selectedHeightUnit = ""
@@ -214,21 +206,19 @@ struct ContentView: View {
         //        weight = 0.0
     }
     
-    func findZeroFields(height: Double, weight:Double) -> Array<Bool>
-    {
-        var emptyFields = [Bool]()
-        
-        if weight == 0 {
-            weightEmpty = true
-            emptyFields.append(weightEmpty)
+   
+    func areValuesNotZero(height:Double, weight:Double) -> Bool {
+        var areValuesNotZero = false
+        if (height != 0.0 && weight != 0.0){
+            areValuesNotZero = true
         }
-        else if height == 0 {
-            heightEmpty = true
-            emptyFields.append(heightEmpty)
+        else {
+            areValuesNotZero = false
         }
+        return areValuesNotZero
         
-        return emptyFields
     }
+    
     
     
     func areUnitsPicked(heightUnits:String, weightUnits:String) -> Bool{
