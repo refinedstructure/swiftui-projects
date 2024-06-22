@@ -67,6 +67,7 @@ struct ContentView: View {
     @State private var latestBMI:Double = 0.0
     
     //HISTORY
+    @State private var showingHistory = false
     
     @State private var bmiRecords = bmiRecordItems()
     
@@ -76,10 +77,6 @@ struct ContentView: View {
     @State private var weightEmpty = true
     @State private var heightNotSelected = true
     @State private var weightNotSelected = true
-    
-    @State private var showingHistory = false
-    
-
     
     @State private var zeroFields = [Bool]()
     
@@ -142,16 +139,12 @@ struct ContentView: View {
                 
                 }
                 
-                
                 HStack{
-                    
-                    
                     Button("History", systemImage: "chart.bar")
                     {
                         showingHistory.toggle()
                         
                     }.sheet(isPresented: $showingHistory){
-                        
                         HistoryView()
                     }
                     .buttonStyle(BorderedButtonStyle())
@@ -159,31 +152,25 @@ struct ContentView: View {
                     .foregroundColor(.black)
                     .overlay(Capsule().stroke(LinearGradient(colors: [Color(.blue), Color(.gray), Color(.blue)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
                     .controlSize(.large)
-                    .padding(10)
-                    
-                    
-                    
-                    //
-                    
+
                     
                     Button("Calculate", systemImage: "play.fill")
                     {
-                        
-                        
                         unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
                         unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                        
                         //                            PENDING - ZERO VALUES on weight and height
                         
-                        
+
                         
                         if (unitsSelected && unitsMatch)
                         {
                             latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
                             calculatePressed = true
-                            alertText = "Your BMI is \(latestBMI)"
-                            //ADD TO BMI HISTORY NEW
-                            
+                            alertText = """
+                            Your BMI: \(latestBMI)
+                            Your BMI class: \(bmiClass(bmi: latestBMI))
+                            """
+                        
                             resetFields()
                         }
                         
@@ -193,23 +180,26 @@ struct ContentView: View {
                     .buttonStyle(BorderedButtonStyle())
                     .clipShape(Capsule())
                     .foregroundColor(.black)
-                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.black), Color(.red), Color(.black)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
+                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.blue), Color(.yellow), Color(.blue)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
                     .controlSize(.large)
-                    .padding(10)
                 }
                 
-                .alert(alertText, isPresented: $calculatePressed)
+                .alert("BMI", isPresented: $calculatePressed)
                 {
-                    Button("Okay",role:.cancel) {
-                        
+                    Button("Close",role:.cancel) {
+                        latestBMI = 0.0
+                        calculatePressed = false
+                    }
+                    Button("Save") {
                         let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI), bmiDateCaptured: Date())
                         bmiRecords.records.insert(savedRecord, at: 0)
                         latestBMI = 0.0
                         calculatePressed = false
-                        
                     }
-                    
                 }
+            message: {
+                Text(alertText)
+            }
                     
            
                 
