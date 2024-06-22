@@ -16,27 +16,23 @@ struct HistoryView: View {
     @State private var bmiRecords = bmiRecordItems()
     
     var body: some View {
-
+        
         NavigationStack {
-            List {
-                if (bmiRecords.records.count == 0){
-                    Text("No Records Found")
-                }
-                ScrollView{
-                    LazyVGrid(columns:layout){
-                        Text("BMI").font(.headline)
-                        Text("BMI CLASS").font(.headline)
-                        Text("DATE").font(.headline)
-                        ForEach(bmiRecords.records) { record in
-                            GridRow(alignment: .firstTextBaseline){
-                                Text(String(record.bmiCaptured))
-                                Text(record.bmiClassCaptured)
-                                Text(record.bmiDateCaptured.formatted())
+            List{
+                ForEach(bmiRecords.records) { record in
+                    NavigationLink("Entry: \(record.bmiDateCaptured.formatted())") {
+                        VStack{
+                            List {
+                                Text("Weight: \(record.weightCaptured) \(record.weightUnitsCaptured)")
+                                Text("Height \(record.heightCaptured) \(record.heightUnitsCaptured)")
+                                Text("BMI: \(record.bmiCaptured)")
+                                Text("BMI Class: \(record.bmiClassCaptured)")
+                                Text("Captured on: \(record.bmiDateCaptured)")
                             }
-                            
-                        }.onDelete(perform: deleteRecords)  
+                        }.navigationTitle("Details")
                     }
-                }
+                    
+                }.onDelete(perform: deleteRecords)
                 
             }.navigationTitle("BMI History")
                 .toolbar{
@@ -53,8 +49,35 @@ struct HistoryView: View {
                 }
             
         }
+            
         
     }
+    
+            
+//            
+//            List {
+//                if (bmiRecords.records.count == 0){
+//                    Text("No Records Found")
+//                }
+//                ScrollView{
+//                    LazyVGrid(columns:layout){
+//                        Text("BMI").font(.headline)
+//                        Text("BMI CLASS").font(.headline)
+//                        Text("DATE").font(.headline)
+//                        ForEach(bmiRecords.records) { record in
+//                            GridRow{
+//                                Text(String(record.bmiCaptured))
+//                                Text(record.bmiClassCaptured)
+//                                Text(record.bmiDateCaptured.formatted())
+//                            }
+//                            
+//                        }.onDelete(perform: deleteRecords)
+//                    }
+//                }
+                
+                
+    
+  
     func deleteRecords(at offsets:IndexSet){
         bmiRecords.records.remove(atOffsets: offsets)
     }

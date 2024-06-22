@@ -169,7 +169,7 @@ struct ContentView: View {
                             Your BMI class: \(bmiClass(bmi: latestBMI))
                             """
                         
-                            resetFields()
+                         
                         }
                         
                         
@@ -193,6 +193,7 @@ struct ContentView: View {
                         bmiRecords.records.insert(savedRecord, at: 0)
                         latestBMI = 0.0
                         calculatePressed = false
+                        resetFields()
                     }
                 }
             message: {
