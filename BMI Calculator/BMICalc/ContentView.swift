@@ -154,13 +154,11 @@ struct ContentView: View {
                     .controlSize(.large)
 
                     
-                    Button("Calculate", systemImage: "play.fill")
+                    Button("Calculate", systemImage: "lines.measurement.vertical")
                     {
                         unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
                         unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
                         //                            PENDING - ZERO VALUES on weight and height
-                        
-
                         
                         if (unitsSelected && unitsMatch)
                         {

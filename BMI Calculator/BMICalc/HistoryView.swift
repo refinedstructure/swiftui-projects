@@ -10,7 +10,7 @@ import SwiftUI
 struct HistoryView: View {
     @Environment(\.dismiss) var dismiss
     let layout = [
-        GridItem(.adaptive(minimum: 80))
+        GridItem(.adaptive(minimum: 90))
     ]
     
     @State private var bmiRecords = bmiRecordItems()
@@ -34,9 +34,7 @@ struct HistoryView: View {
                                 Text(record.bmiDateCaptured.formatted())
                             }
                             
-                     
-                            
-                        } .onDelete(perform: deleteRecords)
+                        }.onDelete(perform: deleteRecords)  
                     }
                 }
                 
