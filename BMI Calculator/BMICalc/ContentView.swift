@@ -178,7 +178,7 @@ struct ContentView: View {
                 
                 .alert("BMI", isPresented: $calculatePressed)
                 {
-                    Button("Close",role:.cancel) {
+                    Button("Don't Save", role:.cancel) {
                         latestBMI = 0.0
                         calculatePressed = false
                     }
