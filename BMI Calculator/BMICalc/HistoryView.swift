@@ -9,9 +9,9 @@ import SwiftUI
 
 struct HistoryView: View {
     @Environment(\.dismiss) var dismiss
-    let layout = [
-        GridItem(.adaptive(minimum: 90))
-    ]
+//    let layout = [
+//        GridItem(.adaptive(minimum: 90))
+//    ]
     
     @State private var bmiRecords = bmiRecordItems()
     
@@ -20,7 +20,7 @@ struct HistoryView: View {
         NavigationStack {
             List{
                 ForEach(bmiRecords.records) { record in
-                    NavigationLink("Entry: \(record.bmiDateCaptured.formatted())") {
+                    NavigationLink("BMI: \(record.bmiCaptured) On: \(record.bmiDateCaptured.formatted(date:.abbreviated, time: .omitted))") {
                         VStack{
                             List {
                                 Text("Weight: \(record.weightCaptured) \(record.weightUnitsCaptured)")

@@ -81,11 +81,8 @@ struct ContentView: View {
     @State private var zeroFields = [Bool]()
     
     var body:some View {
-        
-       
-            VStack {
-                
-                Form{
+        VStack {
+        Form{
                     Text("BMI Calculator")
                         .listRowBackground(Color.clear)
                         .font(.title)
