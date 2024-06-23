@@ -48,6 +48,11 @@ class bmiRecordItems {
 
 struct ContentView: View {
     
+    enum fieldEmptyError: Error{
+        case height, weight, both
+    }
+    @State private var fieldErrorText = ""
+    
     @AppStorage("weight") private var weight = 0.0
     let weightUnits = ["kilos", "pounds"]
     
@@ -79,82 +84,107 @@ struct ContentView: View {
     @State private var weightNotSelected = true
     @State private var areValuesNotZero = false
     
+    @State private var showingErrorToast = false
+    
     @State private var zeroFields = [Bool]()
     
     var body:some View {
         VStack {
-        Form{
-                    Text("BMI Calculator")
-                        .listRowBackground(Color.clear)
-                        .font(.title)
-                        .fontWidth(.standard)
-                        .foregroundStyle(.blue.gradient)
-                        .frame(maxWidth:.infinity, alignment: .center)
-                        .background(.clear)
-                    
-                    Section("Weight") {
-                        
-                        HStack {
-                            TextField("Enter your weight", value:$weight, format:.number)
-                                .keyboardType(.decimalPad)
-                            Text(selectedWeightUnit)
-                                .font(.caption)
-                        }
-                    }
-                    Section("Select Weight Units") {
-                        Picker("", selection: $selectedWeightUnit)
-                        {
-                            ForEach(weightUnits, id: \.self){
-                                Text($0)
-                            }
-                            
-                        }.pickerStyle(.segmented)
-                        
-                        
-                        
-                    }
-                    Section("Height") {
-                        
-                        HStack {
-                            TextField("Enter your height", value:$height, format:.number)
-                                .keyboardType(.decimalPad)
-                            Text(selectedHeightUnit)
-                                .font(.caption)
-                        }
-                        
-                    }
-                    Section("Select Height Units"){
-                        Picker("", selection:$selectedHeightUnit){
-                            ForEach(heightUnits, id: \.self){
-                                Text($0)
-                            }
-                            
-                        }.pickerStyle(.segmented)
-                    }
-        }
+            Form{
+                Text("BMI Calculator")
+                    .listRowBackground(Color.clear)
+                    .font(.title)
+                    .fontWidth(.standard)
+                    .foregroundStyle(.blue.gradient)
+                    .frame(maxWidth:.infinity, alignment: .center)
+                    .background(.clear)
                 
-                HStack{
-                    Button("History", systemImage: "chart.bar")
-                    {
-                        showingHistory.toggle()
-                        
-                    }.sheet(isPresented: $showingHistory){
-                        HistoryView()
-                    }
-                    .buttonStyle(BorderedButtonStyle())
-                    .clipShape(Capsule())
-                    .foregroundColor(.black)
-                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.blue), Color(.gray), Color(.blue)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
-                    .controlSize(.large)
-
+                Section("Weight") {
                     
-                    Button("Calculate", systemImage: "lines.measurement.vertical")
+                    HStack {
+                        TextField("Enter your weight", value:$weight, format:.number)
+                            .keyboardType(.decimalPad)
+                        Text(selectedWeightUnit)
+                            .font(.caption)
+                    }
+                }
+                Section("Select Weight Units") {
+                    Picker("", selection: $selectedWeightUnit)
                     {
-                        unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                        unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                        ForEach(weightUnits, id: \.self){
+                            Text($0)
+                        }
                         
-                        areValuesNotZero = areValuesNotZero(height: height, weight: weight)
+                    }.pickerStyle(.segmented)
+                    
+                    
+                    
+                }
+                Section("Height") {
+                    
+                    HStack {
+                        TextField("Enter your height", value:$height, format:.number)
+                            .keyboardType(.decimalPad)
+                        Text(selectedHeightUnit)
+                            .font(.caption)
+                    }
+                    
+                }
+                Section("Select Height Units"){
+                    Picker("", selection:$selectedHeightUnit){
+                        ForEach(heightUnits, id: \.self){
+                            Text($0)
+                        }
                         
+                    }.pickerStyle(.segmented)
+                }
+            }
+
+                
+            HStack{
+                Button("History", systemImage: "chart.bar")
+                {
+                    showingHistory.toggle()
+                    
+                }.sheet(isPresented: $showingHistory){
+                    HistoryView()
+                }
+                .buttonStyle(BorderedButtonStyle())
+                .clipShape(Capsule())
+                .foregroundColor(.black)
+                .overlay(Capsule().stroke(LinearGradient(colors: [Color(.blue), Color(.gray), Color(.blue)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
+                .controlSize(.large)
+                
+                
+                
+                Button("Calculate", systemImage: "lines.measurement.vertical")
+                {
+                    unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                    unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
+                    
+                    do {
+                        try areValuesNotZero = areValuesNotZero(height: height, weight: weight)
+                    }
+                    catch fieldEmptyError.both {
+                        showingErrorToast = true
+                        fieldErrorText = "Height and Weight can't be zero"
+                    }
+                    catch fieldEmptyError.height{
+                        showingErrorToast = true
+                        fieldErrorText = "Height Can't Be 0"
+                    }
+                    catch fieldEmptyError.weight {
+                        showingErrorToast = true
+                        fieldErrorText = "Weight Can't Be 0"
+                    }
+                 
+                    catch {
+                        showingErrorToast = true
+                        fatalError("Something went wrong")
+                    }
+                    
+                    
+            
                         //                            PENDING - ZERO VALUES on weight and height
                         
                         if (unitsSelected && unitsMatch && areValuesNotZero)
@@ -185,8 +215,8 @@ struct ContentView: View {
                     Button("Save") {
                         let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI), bmiDateCaptured: Date())
                         bmiRecords.records.insert(savedRecord, at: 0)
-                        latestBMI = 0.0
                         calculatePressed = false
+                        latestBMI = 0.0
                         resetFields()
                     }
                 }
@@ -194,7 +224,9 @@ struct ContentView: View {
                 Text(alertText)
             }
        
-            }
+        }.alert(fieldErrorText, isPresented: $showingErrorToast) {
+           
+        }
 
         }
 
@@ -207,14 +239,17 @@ struct ContentView: View {
     }
     
    
-    func areValuesNotZero(height:Double, weight:Double) -> Bool {
+    func areValuesNotZero(height:Double, weight:Double) throws -> Bool {
+        if (height == 0.0 && weight == 0.0) {throw fieldEmptyError.both}
+        if height == 0.0 { throw fieldEmptyError.height }
+        if weight == 0.0 {throw fieldEmptyError.weight }
+       
+        
         var areValuesNotZero = false
         if (height != 0.0 && weight != 0.0){
             areValuesNotZero = true
         }
-        else {
-            areValuesNotZero = false
-        }
+      
         return areValuesNotZero
         
     }
