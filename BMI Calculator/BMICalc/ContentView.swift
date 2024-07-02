@@ -249,9 +249,7 @@ struct ContentView: View {
         if (height != 0.0 && weight != 0.0){
             areValuesNotZero = true
         }
-      
         return areValuesNotZero
-        
     }
     
     
