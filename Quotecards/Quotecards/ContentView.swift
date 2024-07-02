@@ -37,7 +37,7 @@ struct ContentView: View {
             ScrollView{
                 LazyVGrid(columns: categoryColumns, spacing: 15) {
                     ForEach(categories, id: \.id) { category in
-                        NavigationLink{ QuoteView()
+                        NavigationLink{ QuoteView(selectedCategory: category.name)
                         }label:
                         {
                             VStack{
