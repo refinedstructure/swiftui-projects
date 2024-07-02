@@ -7,15 +7,19 @@
 
 import SwiftUI
 
+
 struct QuoteView: View {
-    
+
     let selectedCategory: String
     
     var body: some View {
         Text(selectedCategory)
+        
     }
 }
 
 #Preview {
+    
+    
     QuoteView(selectedCategory: "Test")
 }

@@ -1,0 +1,272 @@
+[
+    {
+        "id": 1,
+        "quoteCategory": "tv",
+        "quote": "Winter is coming.",
+        "author": "Eddard Stark"
+    },
+    {
+        "id": 2,
+        "quoteCategory": "tv",
+        "quote": "I am the one who knocks!",
+        "author": "Walter White"
+    },
+    {
+        "id": 3,
+        "quoteCategory": "tv",
+        "quote": "The truth is out there.",
+        "author": "Fox Mulder"
+    },
+    {
+        "id": 4,
+        "quoteCategory": "tv",
+        "quote": "Bazinga!",
+        "author": "Sheldon Cooper"
+    },
+    {
+        "id": 5,
+        "quoteCategory": "tv",
+        "quote": "How you doin'?",
+        "author": "Joey Tribbiani"
+    },
+    {
+        "id": 6,
+        "quoteCategory": "tv",
+        "quote": "I want to believe.",
+        "author": "Dana Scully"
+    },
+    {
+        "id": 7,
+        "quoteCategory": "tv",
+        "quote": "D'oh!",
+        "author": "Homer Simpson"
+    },
+    {
+        "id": 8,
+        "quoteCategory": "tv",
+        "quote": "Yada, yada, yada.",
+        "author": "Elaine Benes"
+    },
+    {
+        "id": 9,
+        "quoteCategory": "tv",
+        "quote": "Live long and prosper.",
+        "author": "Spock"
+    },
+    {
+        "id": 10,
+        "quoteCategory": "tv",
+        "quote": "I am Groot.",
+        "author": "Groot"
+    },
+    {
+        "id": 11,
+        "quoteCategory": "movies",
+        "quote": "May the Force be with you.",
+        "author": "Han Solo"
+    },
+    {
+        "id": 12,
+        "quoteCategory": "movies",
+        "quote": "I'll be back.",
+        "author": "The Terminator"
+    },
+    {
+        "id": 13,
+        "quoteCategory": "movies",
+        "quote": "Here's looking at you, kid.",
+        "author": "Rick Blaine"
+    },
+    {
+        "id": 14,
+        "quoteCategory": "movies",
+        "quote": "You talking to me?",
+        "author": "Travis Bickle"
+    },
+    {
+        "id": 15,
+        "quoteCategory": "movies",
+        "quote": "E.T. phone home.",
+        "author": "E.T."
+    },
+    {
+        "id": 16,
+        "quoteCategory": "movies",
+        "quote": "I'm the king of the world!",
+        "author": "Jack Dawson"
+    },
+    {
+        "id": 17,
+        "quoteCategory": "movies",
+        "quote": "Houston, we have a problem.",
+        "author": "Jim Lovell"
+    },
+    {
+        "id": 18,
+        "quoteCategory": "movies",
+        "quote": "Hasta la vista, baby.",
+        "author": "The Terminator"
+    },
+    {
+        "id": 19,
+        "quoteCategory": "movies",
+        "quote": "Keep your friends close, but your enemies closer.",
+        "author": "Michael Corleone"
+    },
+    {
+        "id": 20,
+        "quoteCategory": "movies",
+        "quote": "I see dead people.",
+        "author": "Cole Sear"
+    },
+    {
+        "id": 21,
+        "quoteCategory": "personalities",
+        "quote": "The only limit to our realization of tomorrow is our doubts of today.",
+        "author": "Franklin D. Roosevelt"
+    },
+    {
+        "id": 22,
+        "quoteCategory": "personalities",
+        "quote": "I have a dream.",
+        "author": "Martin Luther King Jr."
+    },
+    {
+        "id": 23,
+        "quoteCategory": "personalities",
+        "quote": "To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment.",
+        "author": "Ralph Waldo Emerson"
+    },
+    {
+        "id": 24,
+        "quoteCategory": "personalities",
+        "quote": "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+        "author": "Martin Luther King Jr."
+    },
+    {
+        "id": 25,
+        "quoteCategory": "personalities",
+        "quote": "The best way to find yourself is to lose yourself in the service of others.",
+        "author": "Mahatma Gandhi"
+    },
+    {
+        "id": 26,
+        "quoteCategory": "personalities",
+        "quote": "The journey of a thousand miles begins with one step.",
+        "author": "Lao Tzu"
+    },
+    {
+        "id": 27,
+        "quoteCategory": "personalities",
+        "quote": "Life is what happens when you're busy making other plans.",
+        "author": "John Lennon"
+    },
+    {
+        "id": 28,
+        "quoteCategory": "personalities",
+        "quote": "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+        "author": "Winston Churchill"
+    },
+    {
+        "id": 29,
+        "quoteCategory": "personalities",
+        "quote": "You miss 100% of the shots you don't take.",
+        "author": "Wayne Gretzky"
+    },
+    {
+        "id": 30,
+        "quoteCategory": "personalities",
+        "quote": "In the middle of difficulty lies opportunity.",
+        "author": "Albert Einstein"
+    },
+    {
+        "id": 31,
+        "quoteCategory": "books",
+        "quote": "It is our choices that show what we truly are, far more than our abilities.",
+        "author": "J.K. Rowling"
+    },
+    {
+        "id": 32,
+        "quoteCategory": "books",
+        "quote": "All we have to decide is what to do with the time that is given us.",
+        "author": "J.R.R. Tolkien"
+    },
+    {
+        "id": 33,
+        "quoteCategory": "books",
+        "quote": "To be, or not to be, that is the question.",
+        "author": "William Shakespeare"
+    },
+    {
+        "id": 34,
+        "quoteCategory": "books",
+        "quote": "The only way out of the labyrinth of suffering is to forgive.",
+        "author": "John Green"
+    },
+    {
+        "id": 35,
+        "quoteCategory": "books",
+        "quote": "So we beat on, boats against the current, borne back ceaselessly into the past.",
+        "author": "F. Scott Fitzgerald"
+    },
+    {
+        "id": 36,
+        "quoteCategory": "books",
+        "quote": "It was the best of times, it was the worst of times.",
+        "author": "Charles Dickens"
+    },
+    {
+        "id": 37,
+        "quoteCategory": "books",
+        "quote": "Not all those who wander are lost.",
+        "author": "J.R.R. Tolkien"
+    },
+    {
+        "id": 38,
+        "quoteCategory": "books",
+        "quote": "The only thing necessary for the triumph of evil is for good men to do nothing.",
+        "author": "Edmund Burke"
+    },
+    {
+        "id": 39,
+        "quoteCategory": "books",
+        "quote": "To kill a mockingbird is to kill a songbird.",
+        "author": "Harper Lee"
+    },
+    {
+        "id": 40,
+        "quoteCategory": "books",
+        "quote": "A reader lives a thousand lives before he dies. The man who never reads lives only one.",
+        "author": "George R.R. Martin"
+    },
+    {
+        "id": 41,
+        "quoteCategory": "books",
+        "quote": "In a hole in the ground there lived a hobbit.",
+        "author": "J.R.R. Tolkien"
+    },
+    {
+        "id": 42,
+        "quoteCategory": "books",
+        "quote": "The only way to deal with fear is to face it head-on.",
+        "author": "J.K. Rowling"
+    },
+    {
+        "id": 43,
+        "quoteCategory": "books",
+        "quote": "We accept the love we think we deserve.",
+        "author": "Stephen Chbosky"
+    },
+    {
+        "id": 44,
+        "quoteCategory": "books",
+        "quote": "It does not do to dwell on dreams and forget to live.",
+        "author": "J.K. Rowling"
+    },
+    {
+        "id": 45,
+        "quoteCategory": "books",
+        "quote": "The world is full of obvious things which nobody by any chance ever observes.",
+        "author": "Arthur Conan Doyle"
+    }
+]
