@@ -12,6 +12,7 @@
 		469FDA2C2C33C9F100DAE4AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 469FDA2B2C33C9F100DAE4AC /* Assets.xcassets */; };
 		469FDA2F2C33C9F100DAE4AC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 469FDA2E2C33C9F100DAE4AC /* Preview Assets.xcassets */; };
 		469FDA362C33E24000DAE4AC /* quoteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FDA352C33E24000DAE4AC /* quoteCategories.swift */; };
+		469FDA382C348A6000DAE4AC /* QuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FDA372C348A6000DAE4AC /* QuoteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		469FDA2B2C33C9F100DAE4AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		469FDA2E2C33C9F100DAE4AC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		469FDA352C33E24000DAE4AC /* quoteCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quoteCategories.swift; sourceTree = "<group>"; };
+		469FDA372C348A6000DAE4AC /* QuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			children = (
 				469FDA272C33C9F000DAE4AC /* QuotecardsApp.swift */,
 				469FDA292C33C9F000DAE4AC /* ContentView.swift */,
+				469FDA372C348A6000DAE4AC /* QuoteView.swift */,
 				469FDA352C33E24000DAE4AC /* quoteCategories.swift */,
 				469FDA2B2C33C9F100DAE4AC /* Assets.xcassets */,
 				469FDA2D2C33C9F100DAE4AC /* Preview Content */,
@@ -143,6 +146,7 @@
 				469FDA2A2C33C9F000DAE4AC /* ContentView.swift in Sources */,
 				469FDA282C33C9F000DAE4AC /* QuotecardsApp.swift in Sources */,
 				469FDA362C33E24000DAE4AC /* quoteCategories.swift in Sources */,
+				469FDA382C348A6000DAE4AC /* QuoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
