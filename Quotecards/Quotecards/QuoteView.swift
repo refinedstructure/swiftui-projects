@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+let decoder = JSONDecoder()
+let file = "quotes.json"
 
 struct QuoteView: View {
-
+    let quotes: Quote
     let selectedCategory: String
     
     var body: some View {
@@ -20,6 +22,9 @@ struct QuoteView: View {
 
 #Preview {
     
+    let quotes: Quote = Bundle.main.decode("quotes.json")
+    
+    return QuoteView(quotes: quotes[0]!)
     
     QuoteView(selectedCategory: "Test")
 }
