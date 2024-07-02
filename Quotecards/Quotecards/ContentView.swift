@@ -30,15 +30,17 @@ struct ContentView: View {
     ]
     
     var body: some View {
-
+        
+        
         NavigationStack {
             ScrollView{
-                LazyVGrid(columns: categoryColumns, spacing: 50) {
+                LazyVGrid(columns: categoryColumns, spacing: 20) {
                     ForEach(categories, id: \.id) { category in
                         VStack{
                             Text(category.name).font(.title)
                             Image(systemName:"\(category.icon)").resizable().frame(width:100, height:100).scaledToFit().padding()
                             Text(category.description).font(.caption).padding()
+                                .foregroundStyle(.black.opacity(0.7))
                         }
                         .clipShape(.rect(cornerRadius: 20))
                             .overlay(
@@ -47,10 +49,17 @@ struct ContentView: View {
                     }
                
                 }
+                .padding(.vertical)
+                .frame(maxWidth:.infinity)
+                .background(.ultraThinMaterial)
+                
             }
-    
+            .navigationTitle("Quotes")
+            .background(.ultraThinMaterial)
+
+            
         }
-        .navigationTitle("Quotes")
+       
     }
 }
 
