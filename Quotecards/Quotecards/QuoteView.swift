@@ -20,17 +20,24 @@ struct QuoteView: View {
     let selectedCategory: String
     @State private var allQuotes: [Quote] = []
     
+    let rows = [
+        GridItem(.flexible())
+    ]
 
     var body: some View {
         ScrollView(.horizontal){
-            ForEach(allQuotes, id: \.id) { quote in
-                LazyHStack{
-                    Text(quote.quote)
-                }
-            }
+            LazyHGrid(rows:rows, spacing:5) {
+                ForEach(allQuotes, id: \.id) { quote in
+                    VStack{
+                        Text(quote.quote).font(.title).padding()
+                        Text("-- " + quote.author)
+                    }.frame(width:300, height:300)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke()).frame(width:500, height:500).foregroundStyle(.blue)
+                    
+                    
+                }}
         }.onAppear{
             allQuotes = decodeData()
-
         }
     }
     
