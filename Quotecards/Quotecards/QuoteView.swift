@@ -18,21 +18,24 @@ import SwiftUI
 
 struct QuoteView: View {
     let selectedCategory: String
-    @State private var allQuotes: [Quote] = []
+  @State private var allQuotes: [Quote] = []
     
     let rows = [
         GridItem(.flexible())
     ]
-
+    
     var body: some View {
+        Text(selectedCategory).font(.largeTitle)
+
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:5) {
                 ForEach(allQuotes, id: \.id) { quote in
                     VStack{
-                        Text(quote.quote).font(.title).padding()
-                        Text("-- " + quote.author)
-                    }.frame(width:300, height:300)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke()).frame(width:500, height:500).foregroundStyle(.blue)
+                            Text(quote.quote).font(.title).padding()
+                            Text("-- " + quote.author)
+                   
+                    }.frame(width:250, height:360)
+                        .overlay(RoundedRectangle(cornerRadius: 20).stroke()).frame(width:250, height:360).foregroundStyle(.black).padding(.horizontal)
                     
                     
                 }}
@@ -63,7 +66,7 @@ struct QuoteView: View {
 
 #Preview {
     QuoteView(
-        selectedCategory: "Test"
+        selectedCategory: "tv"
         
     )
 }
