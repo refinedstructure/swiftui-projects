@@ -7,44 +7,43 @@
 
 import SwiftUI
 
-
-
-
-
-
-
-
 //    let quotes: Quote
 
 struct QuoteView: View {
     let selectedCategory: String
+    var viewQuotes: [Quote] = []
   @State private var allQuotes: [Quote] = []
+    
+
     
     let rows = [
         GridItem(.flexible())
     ]
     
     var body: some View {
-        Text(selectedCategory).font(.largeTitle)
-
+        VStack{
+            Text(selectedCategory).font(.largeTitle)
+        }.padding(.horizontal)
+        
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:5) {
+                
                 ForEach(allQuotes, id: \.id) { quote in
-                    VStack{
+                        VStack{
                             Text(quote.quote).font(.title).padding()
-                            Text("-- " + quote.author)
-                   
-                    }.frame(width:250, height:360)
-                        .overlay(RoundedRectangle(cornerRadius: 20).stroke()).frame(width:250, height:360).foregroundStyle(.black).padding(.horizontal)
-                    
-                    
+                            Text("-- " + quote.author).font(.subheadline)
+                        }
+                        .frame(width:360, height:380)
+                        .overlay(RoundedRectangle(cornerRadius: 20).foregroundColor(.gray).opacity(0.2)).padding(.horizontal)
                 }}
         }.onAppear{
-            allQuotes = decodeData()
+  
+            allQuotes = decodeData(selectedCategory: selectedCategory)
+            
         }
     }
     
-    func decodeData() -> [Quote]
+    func decodeData(selectedCategory:String) -> [Quote]
     {
         guard let quotesJSONURL = Bundle.main.url(forResource: "quotes", withExtension: "json") else {
             fatalError("Could not load quotes.json")
@@ -59,7 +58,10 @@ struct QuoteView: View {
         guard let decodedQuotes = try? decoder.decode([Quote].self, from: quotesData) else {
             fatalError("There was a problem decoding the data...")
         }
-        return decodedQuotes
+        
+        let decodedQuotes2 = decodedQuotes.filter({$0.quoteCategory == selectedCategory.lowercased()})
+        
+        return decodedQuotes2
     }
     
 }
@@ -67,6 +69,5 @@ struct QuoteView: View {
 #Preview {
     QuoteView(
         selectedCategory: "tv"
-        
     )
 }
