@@ -1,5 +1,5 @@
 # swiftui-projects
-My Personal SwiftUI projects
+My Personal SwiftUI projects. Note: These are works in progress and are not yet finished. 
 # Projects
 ## BMI Calculator 
 Simple app that lets you calculate and store your BMI
