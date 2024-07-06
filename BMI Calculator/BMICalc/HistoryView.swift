@@ -2,7 +2,7 @@
 //  HistoryView.swift
 //  BMICalc
 //
-//  Created by Abhishek Rane on 21/06/24.
+//  Created by Abhishek R on 21/06/24.
 //
 
 import SwiftUI
@@ -20,12 +20,12 @@ struct HistoryView: View {
         NavigationStack {
             List{
                 ForEach(bmiRecords.records) { record in
-                    NavigationLink("BMI: \(record.bmiCaptured) On: \(record.bmiDateCaptured.formatted(date:.abbreviated, time: .omitted))") {
+                    NavigationLink("BMI: \(record.bmiCaptured, specifier: "%.2f") On: \(record.bmiDateCaptured.formatted(date:.abbreviated, time: .omitted))") {
                         VStack{
                             List {
-                                Text("Weight: \(record.weightCaptured) \(record.weightUnitsCaptured)")
-                                Text("Height \(record.heightCaptured) \(record.heightUnitsCaptured)")
-                                Text("BMI: \(record.bmiCaptured)")
+                                Text("Weight: \(record.weightCaptured,specifier: "%.2f") \(record.weightUnitsCaptured)")
+                                Text("Height \(record.heightCaptured,specifier: "%.2f") \(record.heightUnitsCaptured)")
+                                Text("BMI: \(record.bmiCaptured, specifier: "%.2f")")
                                 Text("BMI Class: \(record.bmiClassCaptured)")
                                 Text("Captured on: \(record.bmiDateCaptured)")
                             }

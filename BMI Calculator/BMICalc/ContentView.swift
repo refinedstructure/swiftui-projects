@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  BMICalc
 //
-//  Created by Abhishek Rane on 20/05/24.
+//  Created by Abhishek R on 20/05/24.
 //
 
 import SwiftUI
