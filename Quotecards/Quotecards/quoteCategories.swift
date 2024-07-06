@@ -2,7 +2,7 @@
 //  quoteCategories.swift
 //  Quotecards
 //
-//  Created by Abhishek Rane on 02/07/24.
+//  Created by Abhishek R on 02/07/24.
 //
 
 import Foundation
