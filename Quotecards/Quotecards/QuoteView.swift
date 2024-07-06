@@ -22,8 +22,8 @@ struct QuoteView: View {
     
     var body: some View {
         VStack{
-            Text(selectedCategory).font(.largeTitle)
-        }.padding(.horizontal)
+            Text("\(selectedCategory.uppercased()) QUOTES").font(.title2)
+        }
         
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:5) {
@@ -34,7 +34,7 @@ struct QuoteView: View {
                             Text("-- " + quote.author).font(.subheadline)
                         }
                         .frame(width:360, height:380)
-                        .overlay(RoundedRectangle(cornerRadius: 20).foregroundColor(.gray).opacity(0.2)).padding(.horizontal)
+                        .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.purple,.white, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.1)).padding(.horizontal)
                 }}
         }.onAppear{
   

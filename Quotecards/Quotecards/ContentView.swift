@@ -41,16 +41,21 @@ struct ContentView: View {
                         }label:
                         {
                             VStack{
-                                Text(category.name).font(.title).padding()
-                                Image(systemName:"\(category.icon)").resizable().frame(width:80, height:80).scaledToFit().padding()
+                                Text(category.name).font(.title.bold()).padding()
+                                Image(systemName:"\(category.icon)").resizable().scaledToFit().containerRelativeFrame(.horizontal) {size, axis in
+                                    size * 0.2
+                                }
                                 Text(category.description).font(.caption).padding()
                                     .foregroundStyle(.black.opacity(0.7))
                             }
+
                             .frame(width: 250, height: 250)
+    
                             .clipShape(.rect(cornerRadius: 20))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10).stroke()).frame(width:250, height:250)
                                 .foregroundStyle(.black)
+                              
                         }
                     }
                 }
