@@ -33,13 +33,11 @@ struct QuoteView: View {
                             Text(quote.quote).font(.title).padding()
                             Text("-- " + quote.author).font(.subheadline)
                         }
-                        .frame(width:360, height:380)
-                        .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.purple,.white], startPoint: .top, endPoint: .bottom)).opacity(0.1)).padding(.horizontal)
+                        .frame(width:360, height:390)
+                        .overlay(RoundedRectangle(cornerRadius: 25).background(.linearGradient(colors:[.black,.white], startPoint: .top, endPoint: .bottom)).opacity(0.14)).padding(.horizontal)
                 }}
         }.onAppear{
-  
             allQuotes = decodeData(selectedCategory: selectedCategory)
-            
         }
     }
     

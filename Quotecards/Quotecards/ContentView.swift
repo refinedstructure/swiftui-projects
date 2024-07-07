@@ -30,13 +30,9 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        
-        
-        
         NavigationStack {
-
-            ScrollView{
-                LazyVGrid(columns: categoryColumns) {
+        ScrollView{
+                LazyVGrid(columns: categoryColumns, spacing:20) {
                     ForEach(categories, id: \.id) { category in
                         NavigationLink{ QuoteView(selectedCategory: category.name)
                         }label:
@@ -52,20 +48,17 @@ struct ContentView: View {
                             .frame(width: 230, height: 190)
                             .foregroundStyle(.black)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 10).stroke(.black)).frame(width:230, height:190)
-                            
+                                Rectangle().stroke(.black).opacity(0.9)).frame(width:230, height:190).cornerRadius(2)
                         }
                     }
                 }
                 .padding(.vertical)
                 .frame(maxWidth: .infinity)
-                .background(.ultraThickMaterial)
+                .background(.white)
                 
             }
-            .navigationTitle("Quotes")
-            .background(.ultraThinMaterial)
-
-            
+            .navigationTitle("Quote Cards")
+            .background(.white)
         }
        
     }
