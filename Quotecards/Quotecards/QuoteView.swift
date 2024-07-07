@@ -34,7 +34,7 @@ struct QuoteView: View {
                             Text("-- " + quote.author).font(.subheadline)
                         }
                         .frame(width:360, height:380)
-                        .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.purple,.white, .gray], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.1)).padding(.horizontal)
+                        .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.purple,.white], startPoint: .top, endPoint: .bottom)).opacity(0.1)).padding(.horizontal)
                 }}
         }.onAppear{
   
