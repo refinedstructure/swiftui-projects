@@ -26,16 +26,17 @@ struct ContentView: View {
 
     
     let categoryColumns = [
-        GridItem(.flexible())
-        
+        GridItem(.adaptive(minimum: 200))
     ]
     
     var body: some View {
         
         
+        
         NavigationStack {
+
             ScrollView{
-                LazyVGrid(columns: categoryColumns, spacing: 15) {
+                LazyVGrid(columns: categoryColumns) {
                     ForEach(categories, id: \.id) { category in
                         NavigationLink{ QuoteView(selectedCategory: category.name)
                         }label:
@@ -45,17 +46,14 @@ struct ContentView: View {
                                 Image(systemName:"\(category.icon)").resizable().scaledToFit().containerRelativeFrame(.horizontal) {size, axis in
                                     size * 0.2
                                 }
-                                Text(category.description).font(.caption).padding()
-                                    .foregroundStyle(.black.opacity(0.7))
+                                Text(category.description).font(.caption).padding(.vertical)
                             }
 
-                            .frame(width: 250, height: 250)
-    
-                            .clipShape(.rect(cornerRadius: 20))
+                            .frame(width: 230, height: 190)
+                            .foregroundStyle(.black)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 10).stroke()).frame(width:250, height:250)
-                                .foregroundStyle(.black)
-                              
+                                RoundedRectangle(cornerRadius: 10).stroke(.black)).frame(width:230, height:190)
+                            
                         }
                     }
                 }
