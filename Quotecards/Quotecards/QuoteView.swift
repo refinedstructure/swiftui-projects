@@ -22,7 +22,7 @@ struct QuoteView: View {
     
     var body: some View {
         VStack{
-            Text("\(selectedCategory.uppercased()) QUOTES").font(.title2)
+            Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray)
         }
         
         ScrollView(.horizontal){

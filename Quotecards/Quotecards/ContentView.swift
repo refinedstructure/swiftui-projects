@@ -19,12 +19,11 @@ struct ContentView: View {
     init(){
         self.tv_Shows = quoteCategories(name:"TV", description: "Quotes from your favorite TV shows", icon: "tv")
         self.movies = quoteCategories(name: "Movies", description: "Quotes from your favorite movies", icon: "popcorn")
-        self.books = quoteCategories(name: "Books", description: "Quotes from your favorite books",icon: "book")
-        self.personalities = quoteCategories(name:"Personalities", description: "Quotes from famous people", icon: "person")
-        self.categories = [tv_Shows, movies, personalities, books ]
+        self.books = quoteCategories(name: "Books", description: "Quotes from your favorite books",icon: "books.vertical")
+        self.personalities = quoteCategories(name:"Personalities", description: "Quotes from famous people", icon: "person.3")
+        self.categories = [tv_Shows, movies, personalities, books]
     }
 
-    
     let categoryColumns = [
         GridItem(.adaptive(minimum: 200))
     ]
