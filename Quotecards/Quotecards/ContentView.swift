@@ -35,49 +35,37 @@ struct ContentView: View {
             ScrollView{
                 LazyVGrid(columns: categoryColumns, spacing:20) {
                     ForEach(categories, id: \.id) { category in
-                        //                        NavigationLink{ QuoteView(selectedCategory: category.name)
-                        //                        }label:
-                        //                        {
-                        //                            VStack{
-                        //                                Text(category.name).font(.title.bold()).padding()
-                        //                                Image(systemName:"\(category.icon)").resizable().scaledToFit().containerRelativeFrame(.horizontal) {size, axis in
-                        //                                    size * 0.2
-                        //                                }
-                        //                                Text(category.description).font(.caption).padding(.vertical)
-                        //                            }
-                        
-                        
-                        VStack{
-                            NavigationLink(category.name, value: category.name).font(.title.bold()).padding()
-                                                      Text(category.name).font(.title.bold()).padding()
-                                                      Image(systemName:"\(category.icon)").resizable().scaledToFit().containerRelativeFrame(.horizontal) {size, axis in
-                                                          size * 0.2
-                                                      }
-                                                      Text(category.description).font(.caption).padding(.vertical)
-                                                  }
-                        
-                   
-                        
-                        
-                        
+                        NavigationLink(value: category.name, label: {
+                            VStack{
+                                Text(category.name).font(.title.bold()).padding()
+                                Image(systemName:"\(category.icon)").resizable().scaledToFit().containerRelativeFrame(.horizontal) {size, axis in
+                                    size * 0.2
+                                }
+                                Text(category.description).font(.caption).padding(.vertical)
+                            }
+                            .frame(width: 230, height: 190)
+                                .foregroundStyle(.black)
+                                .overlay(
+                                    Rectangle().stroke(.black).opacity(0.9)).frame(width:230, height:190).cornerRadius(4)
+                        }
+                        )
                     }
+            
                     .navigationDestination(for: String.self) { categoryStringValue in
                         QuoteView(selectedCategory: categoryStringValue)
-                     }
+                    }
                 }
+                
+                .navigationTitle("Quote Cards")
+                    .background(.white)
+                
+                
             }
             
-        }    .navigationTitle("Quote Cards")
-            .background(.white)
-//        .frame(width: 230, height: 190)
-//        .foregroundStyle(.black)
-//        .overlay(
-//            Rectangle().stroke(.black).opacity(0.9)).frame(width:230, height:190).cornerRadius(2)
+        }
+     
     }
-//        .padding(.vertical)
-//        .frame(maxWidth: .infinity)
-//        .background(.white)
-//    
+
 }
 
 
