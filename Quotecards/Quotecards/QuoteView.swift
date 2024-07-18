@@ -13,7 +13,6 @@ struct QuoteView: View {
     
     var viewQuotes: [Quote] = []
     @State private var allQuotes: [Quote] = []
-    @State private var path = [String]()
     
     
     let rows = [
@@ -21,20 +20,26 @@ struct QuoteView: View {
     ]
     
     var body: some View {
-       VStack{
-            Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray)
+  
+        VStack{
+            Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray).shadow(radius: 10)
         }
         
         ScrollView(.horizontal){
-            LazyHGrid(rows:rows, spacing:15) {
+            LazyHGrid(rows:rows, spacing:10) {
                 ForEach(allQuotes, id: \.id) { quote in
                     VStack{
                         Text(quote.quote).font(.title).padding()
                         Text("-- " + quote.author).font(.subheadline)
                     }
-                    .frame(width:360, height:390)
+                    
+                    .frame(width:360, height:400)
                     .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.purple,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
-                }}
+                }
+
+            }
+            Spacer()
+        
         }.onAppear{
             allQuotes = decodeData(selectedCategory: selectedCategory)
         }
