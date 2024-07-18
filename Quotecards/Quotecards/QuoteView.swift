@@ -7,34 +7,33 @@
 
 import SwiftUI
 
-//    let quotes: Quote
 
 struct QuoteView: View {
     let selectedCategory: String
-    var viewQuotes: [Quote] = []
-  @State private var allQuotes: [Quote] = []
     
-
+    var viewQuotes: [Quote] = []
+    @State private var allQuotes: [Quote] = []
+    @State private var path = [String]()
+    
     
     let rows = [
         GridItem(.flexible())
     ]
     
     var body: some View {
-        VStack{
+       VStack{
             Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray)
         }
         
         ScrollView(.horizontal){
-            LazyHGrid(rows:rows, spacing:5) {
-                
+            LazyHGrid(rows:rows, spacing:15) {
                 ForEach(allQuotes, id: \.id) { quote in
-                        VStack{
-                            Text(quote.quote).font(.title).padding()
-                            Text("-- " + quote.author).font(.subheadline)
-                        }
-                        .frame(width:360, height:390)
-                        .overlay(RoundedRectangle(cornerRadius: 25).background(.linearGradient(colors:[.black,.white], startPoint: .top, endPoint: .bottom)).opacity(0.14)).padding(.horizontal)
+                    VStack{
+                        Text(quote.quote).font(.title).padding()
+                        Text("-- " + quote.author).font(.subheadline)
+                    }
+                    .frame(width:360, height:390)
+                    .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.purple,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
                 }}
         }.onAppear{
             allQuotes = decodeData(selectedCategory: selectedCategory)
@@ -46,13 +45,13 @@ struct QuoteView: View {
         guard let quotesJSONURL = Bundle.main.url(forResource: "quotes", withExtension: "json") else {
             fatalError("Could not load quotes.json")
         }
-
+        
         guard let quotesData = try? Data(contentsOf: quotesJSONURL) else {
             fatalError("couldn't convert data")
         }
-
+        
         let decoder = JSONDecoder()
-
+        
         guard let decodedQuotes = try? decoder.decode([Quote].self, from: quotesData) else {
             fatalError("There was a problem decoding the data...")
         }
