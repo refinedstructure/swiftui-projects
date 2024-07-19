@@ -20,11 +20,9 @@ struct QuoteView: View {
     ]
     
     var body: some View {
-        
             VStack{
                 Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray).shadow(radius: 10)
             }
-            
         
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:10) {

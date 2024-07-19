@@ -144,13 +144,10 @@ struct ContentView: View {
                         selectedCategory: categoryStringValue, path: $path
                     )
                 }
-                .navigationTitle(
-                    "Quote Cards"
-                )
-                .background(
-                    .white
-                )
-                
+                .navigationTitle("Quote Cards")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbarBackground(.white)
+//                .toolbar(.hidden, for: .navigationBar)
             }
         }
     }
