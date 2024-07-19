@@ -129,19 +129,19 @@ struct ContentView: View {
                     Button("Random Category", systemImage: "shuffle"){
                         path.append(categoryNames.randomElement() ?? "TV")
                     }
-                        .padding()
-                        .background(.gray.opacity(0.3))
-                        .foregroundStyle(.black)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
- 
+                    .padding()
+                    .background(.gray.opacity(0.3))
+                    .foregroundStyle(.black)
+                    .cornerRadius(10)
+                    .shadow(radius: 5)
+                    
                 }
                 
                 .navigationDestination(
                     for: String.self
                 ) { categoryStringValue in
                     QuoteView(
-                        selectedCategory: categoryStringValue
+                        selectedCategory: categoryStringValue, path: $path
                     )
                 }
                 .navigationTitle(
