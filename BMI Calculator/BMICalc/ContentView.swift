@@ -46,6 +46,8 @@ class bmiRecordItems {
 }
 
 
+
+
 struct ContentView: View {
     
     enum fieldEmptyError: Error{
@@ -88,6 +90,10 @@ struct ContentView: View {
     
     @State private var zeroFields = [Bool]()
     
+    
+    var disableCalculate: Bool {
+        weight == 0.0 || height == 0.0
+    }
     var body:some View {
         VStack {
             Form{
@@ -185,7 +191,7 @@ struct ContentView: View {
                     
                     
             
-                        //                            PENDING - ZERO VALUES on weight and height
+                        //                            PENDING - ZERO VALUES on weight and height. To be refactored
                         
                         if (unitsSelected && unitsMatch && areValuesNotZero)
                         {
@@ -198,7 +204,7 @@ struct ContentView: View {
                           }
                 
                     }
-                    
+                    .disabled(disableCalculate)
                     .buttonStyle(BorderedButtonStyle())
                     .clipShape(Capsule())
                     .foregroundColor(.black)

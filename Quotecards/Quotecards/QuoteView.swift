@@ -14,15 +14,18 @@ struct QuoteView: View {
     
     var viewQuotes: [Quote] = []
     @State private var allQuotes: [Quote] = []
-
+    
     let rows = [
         GridItem(.flexible())
     ]
     
     var body: some View {
-            VStack{
-                Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray).shadow(radius: 10)
-            }
+        VStack{
+            Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray).shadow(radius: 10)
+        }
+        
+        
+        
         
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:10) {
@@ -35,10 +38,10 @@ struct QuoteView: View {
                     .frame(width:360, height:400)
                     .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.purple,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
                 }
-
+                
             }
             Spacer()
-        
+            
         }.onAppear{
             allQuotes = decodeData(selectedCategory: selectedCategory)
         }
