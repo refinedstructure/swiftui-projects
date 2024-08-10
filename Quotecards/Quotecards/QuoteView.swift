@@ -21,21 +21,20 @@ struct QuoteView: View {
     
     var body: some View {
         VStack{
-                Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray).shadow(radius: 10)
-        }
+            Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray).shadow(radius: 10)
+        }.padding()
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:10) {
                 ForEach(allQuotes, id: \.id) { quote in
                     VStack{
-                            Text(quote.quote).font(.title)
-                            Text("-- " + quote.author).font(.subheadline)
+                        Text(quote.quote).font(.title)
+                        Text("-- " + quote.author).font(.subheadline)
                     }
                     .frame(width:360, height:400)
                     .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.red,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
                 }
             }
             Spacer()
-            
         }.onAppear{
             allQuotes = decodeData(selectedCategory: selectedCategory)
         }
