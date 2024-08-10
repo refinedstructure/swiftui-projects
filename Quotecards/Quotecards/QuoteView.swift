@@ -25,8 +25,7 @@ struct QuoteView: View {
         }
         
         
-        
-        
+
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:10) {
                 ForEach(allQuotes, id: \.id) { quote in

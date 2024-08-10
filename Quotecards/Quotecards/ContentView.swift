@@ -7,53 +7,10 @@
 
 import SwiftUI
 
-
-
 struct ContentView: View {
-    var tv_Shows: quoteCategories
-    var movies: quoteCategories
-    var books: quoteCategories
-    var personalities: quoteCategories
-    var categories: [quoteCategories]
-    var categoryNames: [String]
     
     @State private var path = NavigationPath()
-    
-    init(){
-        self.tv_Shows = quoteCategories(
-            name:"TV",
-            description: "Quotes from your favorite TV shows",
-            icon: "tv"
-        )
-        self.movies = quoteCategories(
-            name: "Movies",
-            description: "Quotes from your favorite movies",
-            icon: "popcorn"
-        )
-        self.books = quoteCategories(
-            name: "Books",
-            description: "Quotes from your favorite books",
-            icon: "books.vertical"
-        )
-        self.personalities = quoteCategories(
-            name:"Personalities",
-            description: "Quotes from famous people",
-            icon: "person.3"
-        )
-        self.categories = [
-            tv_Shows,
-            movies,
-            personalities,
-            books
-        ]
-        self.categoryNames = [
-            tv_Shows.name,
-            movies.name,
-            books.name,
-            personalities.name
-        ]
-    }
-    
+    @State private var categories = QuoteCategoryData()
     
     let categoryColumns = [
         GridItem(
@@ -63,14 +20,13 @@ struct ContentView: View {
         )
     ]
     
-    
     var body: some View {
         NavigationStack(path: $path)
         {
             ScrollView{
                 LazyVGrid(columns: categoryColumns,spacing:20) {
                     ForEach(
-                        categories,
+                        categories.categories,
                         id: \.id
                     ) { category in
                         NavigationLink(value: category.name,
@@ -127,7 +83,7 @@ struct ContentView: View {
                         )
                     }
                     Button("Random Category", systemImage: "shuffle"){
-                        path.append(categoryNames.randomElement() ?? "TV")
+                        path.append(categories.randomCategory())
                     }
                     .padding()
                     .background(.gray.opacity(0.3))
@@ -147,7 +103,7 @@ struct ContentView: View {
                 .navigationTitle("Quote Cards")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.white)
-//                .toolbar(.hidden, for: .navigationBar)
+                //                .toolbar(.hidden, for: .navigationBar)
             }
         }
     }
