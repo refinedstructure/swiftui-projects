@@ -13,11 +13,8 @@ struct QuoteView: View {
     @Binding var path: NavigationPath
     
 //    @State private var categories = QuoteCategoryData()
-    
-    var viewQuotes: [Quote] = []
     @State private var allQuotes: [Quote] = []
 
-    
     let rows = [
         GridItem(.flexible())
     ]
