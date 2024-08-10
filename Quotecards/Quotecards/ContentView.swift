@@ -99,7 +99,7 @@ struct ContentView: View {
                         selectedCategory: categoryStringValue, path: $path
                     )
                 }
-                .navigationTitle("Quote Cards")
+                .navigationTitle("Quotes").padding()
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbarBackground(.white)
                 //                .toolbar(.hidden, for: .navigationBar)
