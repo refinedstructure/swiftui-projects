@@ -51,7 +51,7 @@ struct ContentView: View {
     
     
     var disableCalculate: Bool {
-        weight == 0.0 || height == 0.0
+        weight == 0.0 || height == 0
     }
     var body:some View {
         VStack {
@@ -69,9 +69,12 @@ struct ContentView: View {
                     HStack {
                         TextField("Enter your weight", value:$weight, format:.number)
                             .keyboardType(.decimalPad)
-                        Text(selectedWeightUnit)
+                        
+                        Text(weight <= 0 ? "Can't be zero or empty" : selectedWeightUnit)
                             .font(.caption)
+                            .foregroundColor(weight <= 0 ? .red : .black)
                     }
+                
                 }
                 Section("Select Weight Units") {
                     Picker("", selection: $selectedWeightUnit)
@@ -90,8 +93,10 @@ struct ContentView: View {
                     HStack {
                         TextField("Enter your height", value:$height, format:.number)
                             .keyboardType(.decimalPad)
-                        Text(selectedHeightUnit)
+                        
+                        Text(height <= 0 ? "Can't be zero or empty" : selectedHeightUnit)
                             .font(.caption)
+                            .foregroundColor(height <= 0 ? .red : .black)
                     }
                     
                 }
@@ -149,9 +154,6 @@ struct ContentView: View {
                     }
                     
                     
-            
-                        //                            PENDING - ZERO VALUES on weight and height. To be refactored
-                        
                         if (unitsSelected && unitsMatch && areValuesNotZero)
                         {
                             latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
@@ -164,6 +166,7 @@ struct ContentView: View {
                 
                     }
                     .disabled(disableCalculate)
+                    
                     .buttonStyle(BorderedButtonStyle())
                     .clipShape(Capsule())
                     .foregroundColor(.black)
