@@ -17,6 +17,26 @@ class BMI {
     var weight = 0.0
     var height = 0.0
     
+    func calculateBMI( height: Double, weight:Double, weightUnit: String) -> Double
+    {
+        var bmi = 0.0
+        if(weightUnit == "kilos") {
+            
+            bmi = ((weight)/((height/100) * (height/100)))
+            bmi = round(bmi * 100)/100.0
+            
+        }
+        else if (weightUnit == "pounds")
+        {
+            
+            bmi = ((weight)/(height * height)) * 703
+            bmi = round(bmi * 100)/100.0
+            
+        }
+        return bmi
+    }
+    
+    
     
     func bmiClass(bmi:Double)-> String{
         var bmiClass = ""

@@ -16,17 +16,14 @@ struct ContentView: View {
     
     @AppStorage("weight") private var weight = 0.0
     let weightUnits = ["kilos", "pounds"]
-    
+    let heightUnits = ["cms", "inches"]
     @AppStorage("weightUnits") private var selectedWeightUnit = ""
     
     @AppStorage("height") private var height = 0.0
-    let heightUnits = ["cms", "inches"]
+ 
     @AppStorage("heightUnits") private var selectedHeightUnit = ""
     
-    @State private var unitsSelected = false
-    @State private var resultsDisplayed = false
-    @State private var unitsMatch = false
-    
+
     @State private var alertTitle = ""
     @State private var alertText = ""
     
@@ -98,7 +95,7 @@ struct ContentView: View {
                     
                 }
                 Section("Select Height Units"){
-                    Picker("", selection:$selectedHeightUnit){
+                    Picker("", selection: $selectedHeightUnit){
                         ForEach(heightUnits, id: \.self){
                             Text($0)
                         }
@@ -172,65 +169,6 @@ struct ContentView: View {
     
    
 
-    func areValuesNotZero(height:Double, weight:Double) throws -> Bool {
-        if (height == 0.0 && weight == 0.0) {throw fieldEmptyError.both}
-        if height == 0.0 { throw fieldEmptyError.height }
-        if weight == 0.0 {throw fieldEmptyError.weight }
-       
-        
-        var areValuesNotZero = false
-        if (height != 0.0 && weight != 0.0){
-            areValuesNotZero = true
-        }
-        return areValuesNotZero
-    }
-    
-    
-    func areUnitsPicked(heightUnits:String, weightUnits:String) -> Bool{
-        var unitStatus = true
-        if(heightUnits == "" || weightUnits == ""){
-            unitStatus = false
-        }
-        else {
-            unitStatus = true
-        }
-        return unitStatus
-    }
-    
-    
-    func doUnitsMatch(heightUnits:String, weightUnits:String) -> Bool {
-        
-        var unitsCorrect = false
-        if (heightUnits == "cms" && weightUnits == "kilos") {
-            unitsCorrect = true
-        }
-        else if (heightUnits == "inches" && weightUnits == "pounds"){
-            unitsCorrect = true
-        }
-        else{
-            unitsCorrect = false
-        }
-        return unitsCorrect
-    }
-    
-    func calculateBMI( height: Double, weight:Double, weightUnit: String) -> Double
-    {
-        var bmi = 0.0
-        if(weightUnit == "kilos") {
-            
-            bmi = ((weight)/((height/100) * (height/100)))
-            bmi = round(bmi * 100)/100.0
-            
-        }
-        else if (weightUnit == "pounds")
-        {
-            
-            bmi = ((weight)/(height * height)) * 703
-            bmi = round(bmi * 100)/100.0
-            
-        }
-        return bmi
-    }
     
     
 }
