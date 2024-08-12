@@ -32,18 +32,20 @@ struct ContentView: View {
     
     @State private var latestBMI:Double = 0.0
     
-    //HISTORY
-    @State private var showingHistory = false
-    
-    @State private var bmiRecords = bmiRecordItems()
-    
-    @State private var calculatePressed = false
     
     @State private var heightEmpty = true
     @State private var weightEmpty = true
     @State private var heightNotSelected = true
     @State private var weightNotSelected = true
     @State private var areValuesNotZero = false
+    
+    //HISTORY
+    @State private var showingHistory = false
+    
+    @State private var bmiRecords = bmiRecordItems()
+    
+    @State private var calculatePressed = false
+
     
     @State private var showingErrorToast = false
     
