@@ -9,9 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    enum fieldEmptyError: Error{
-        case height, weight, both
-    }
+
     @State private var fieldErrorText = ""
     
     @AppStorage("weight") private var weight = 0.0
@@ -68,7 +66,7 @@ struct ContentView: View {
                             .font(.caption)
                             .foregroundColor(weight <= 0 ? .red : .black)
                     }
-                
+                    
                 }
                 Section("Select Weight Units") {
                     Picker("", selection: $selectedWeightUnit)
@@ -103,9 +101,14 @@ struct ContentView: View {
                     }.pickerStyle(.segmented)
                 }
             }
+            VStack{
+                Text("BMI will show here").padding(.bottom)
 
-                
+            }
+
+            
             HStack{
+                
                 Button("History", systemImage: "chart.bar")
                 {
                     showingHistory.toggle()
@@ -113,26 +116,13 @@ struct ContentView: View {
                 }.sheet(isPresented: $showingHistory){
                     HistoryView()
                 }
-                .buttonStyle(BorderedButtonStyle())
-                .clipShape(Capsule())
-                .foregroundColor(.black)
-                .overlay(Capsule().stroke(LinearGradient(colors: [Color(.blue), Color(.gray), Color(.blue)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
-                .controlSize(.large)
-                
-                
-                
+         
                 Button("Calculate", systemImage: "lines.measurement.vertical")
                 {
-                   
                 
                     }
                     .disabled(disableCalculate)
-                    
-                    .buttonStyle(BorderedButtonStyle())
-                    .clipShape(Capsule())
-                    .foregroundColor(.black)
-                    .overlay(Capsule().stroke(LinearGradient(colors: [Color(.blue), Color(.yellow), Color(.blue)], startPoint: .topLeading, endPoint: .bottomTrailing), lineWidth: 2.0))
-                    .controlSize(.large)
+                
                 }
                 
                 .alert("BMI", isPresented: $calculatePressed)
