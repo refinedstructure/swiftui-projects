@@ -32,12 +32,7 @@ struct ContentView: View {
     
     @State private var latestBMI:Double = 0.0
     
-    
-    @State private var heightEmpty = true
-    @State private var weightEmpty = true
-    @State private var heightNotSelected = true
-    @State private var weightNotSelected = true
-    @State private var areValuesNotZero = false
+
     
     //HISTORY
     @State private var showingHistory = false
@@ -131,40 +126,7 @@ struct ContentView: View {
                 
                 Button("Calculate", systemImage: "lines.measurement.vertical")
                 {
-                    unitsSelected = areUnitsPicked(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                    unitsMatch = doUnitsMatch(heightUnits: selectedHeightUnit, weightUnits: selectedWeightUnit)
-                    
-                    do {
-                        try areValuesNotZero = areValuesNotZero(height: height, weight: weight)
-                    }
-                    catch fieldEmptyError.both {
-                        showingErrorToast = true
-                        fieldErrorText = "Height and Weight can't be zero"
-                    }
-                    catch fieldEmptyError.height{
-                        showingErrorToast = true
-                        fieldErrorText = "Height Can't Be 0"
-                    }
-                    catch fieldEmptyError.weight {
-                        showingErrorToast = true
-                        fieldErrorText = "Weight Can't Be 0"
-                    }
-                 
-                    catch {
-                        showingErrorToast = true
-                        fatalError("Something went wrong")
-                    }
-                    
-                    
-                        if (unitsSelected && unitsMatch && areValuesNotZero)
-                        {
-                            latestBMI = calculateBMI(height: height, weight: weight, weightUnit: selectedWeightUnit)
-                            calculatePressed = true
-                            alertText = """
-                            Your BMI: \(latestBMI)
-                            Your BMI class: \(bmiClass(bmi: latestBMI))
-                            """
-                          }
+                   
                 
                     }
                     .disabled(disableCalculate)
@@ -183,8 +145,8 @@ struct ContentView: View {
                         calculatePressed = false
                     }
                     Button("Save") {
-                        let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI), bmiDateCaptured: Date())
-                        bmiRecords.records.insert(savedRecord, at: 0)
+//                        let savedRecord = bmiHistoryRecords(weightCaptured: weight, heightCaptured: height, weightUnitsCaptured: selectedWeightUnit, heightUnitsCaptured: selectedHeightUnit, bmiCaptured: latestBMI, bmiClassCaptured: bmiClass(bmi: latestBMI), bmiDateCaptured: Date())
+//                        bmiRecords.records.insert(savedRecord, at: 0)
                         calculatePressed = false
                         latestBMI = 0.0
                         resetFields()
@@ -209,6 +171,7 @@ struct ContentView: View {
     }
     
    
+
     func areValuesNotZero(height:Double, weight:Double) throws -> Bool {
         if (height == 0.0 && weight == 0.0) {throw fieldEmptyError.both}
         if height == 0.0 { throw fieldEmptyError.height }
@@ -221,7 +184,6 @@ struct ContentView: View {
         }
         return areValuesNotZero
     }
-    
     
     
     func areUnitsPicked(heightUnits:String, weightUnits:String) -> Bool{
@@ -270,28 +232,6 @@ struct ContentView: View {
         return bmi
     }
     
-    
-
-    
-    func bmiClass(bmi:Double)-> String{
-        var bmiClass = ""
-        switch bmi {
-        case 0...18.5:
-            bmiClass = "Underweight"
-        case 18.5...24.9:
-            bmiClass = "Normal weight"
-        case 25...29.9:
-            bmiClass = "Overweight"
-        case 30...100:
-            bmiClass = "Obese"
-        default:
-            bmiClass = "NA"
-        }
-        return bmiClass
-    }
-    
-
-
     
 }
     

@@ -54,27 +54,6 @@ struct HistoryView: View {
     }
     
             
-//            
-//            List {
-//                if (bmiRecords.records.count == 0){
-//                    Text("No Records Found")
-//                }
-//                ScrollView{
-//                    LazyVGrid(columns:layout){
-//                        Text("BMI").font(.headline)
-//                        Text("BMI CLASS").font(.headline)
-//                        Text("DATE").font(.headline)
-//                        ForEach(bmiRecords.records) { record in
-//                            GridRow{
-//                                Text(String(record.bmiCaptured))
-//                                Text(record.bmiClassCaptured)
-//                                Text(record.bmiDateCaptured.formatted())
-//                            }
-//                            
-//                        }.onDelete(perform: deleteRecords)
-//                    }
-//                }
-                
                 
     
   
