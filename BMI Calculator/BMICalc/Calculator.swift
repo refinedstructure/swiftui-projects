@@ -9,11 +9,15 @@ import Foundation
 
 @Observable
 class bmiCalculator {
-    static let weightUnits = ["kilos", "lbs"]
-    static let heightUnits = ["cms", "in"]
+    let weightUnits = ["kilos", "lbs"]
+    let heightUnits = ["cms", "in", "ft"]
     
-    var weight = 0.0
-    var height = 0.0
+    var inputWeight = ""
+    var inputHeight = ""
+    
+    var selectedHeightUnit = "cms"
+    var selectedWeightUnit = "kilos"
+    
     
     func calculateBMI( height: Double, weight:Double, weightUnit: String) -> Double
     {

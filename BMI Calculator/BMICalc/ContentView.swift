@@ -8,24 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
-//    INPUT GATHERED FROM USERS
-@State private var weightString = ""
-@State private var heightString = ""
 
-
-    
 //INSTANCE OF THE BMI CALCULATOR CLASS
-let bmiCalc = bmiCalculator()
+@State private var bmiCalc = bmiCalculator()
 
     var body: some View{
     
-    TextField("Weight", text: $weightString)
+  
+        TextField("Height", text: $bmiCalc.inputHeight)
             .textFieldStyle(.roundedBorder)
             .disableAutocorrection(true)
-    TextField("Height", text: $heightString)
-            .textFieldStyle(.roundedBorder)
-            .disableAutocorrection(true)
-
+        
+        Picker("Enter height units", selection: $bmiCalc.selectedHeightUnit)
+        {
+            ForEach(bmiCalc.heightUnits, id: \.self){
+                Text($0)
+            }
+        }.pickerStyle(.segmented)
+        
+        TextField("Weight", text: $bmiCalc.inputWeight)
+                .textFieldStyle(.roundedBorder)
+                .disableAutocorrection(true)
+        
+        Picker("Enter weight units", selection: $bmiCalc.selectedWeightUnit)
+        {
+            ForEach(bmiCalc.weightUnits, id: \.self){
+                Text($0)
+            }
+        }.pickerStyle(.segmented)
         
     }
     
