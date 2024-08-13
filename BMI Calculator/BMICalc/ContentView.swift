@@ -18,6 +18,7 @@ struct ContentView: View {
                 Text("Your BMI is \(bmiCalc.bmi) ")
                     .padding()
                     .animation(.smooth, value: 100)
+                    .font(.title)
                 Text("Your BMI Category is \(bmiCalc.bmiClass)")
                     .padding()
                     .animation(.smooth, value: 100)
