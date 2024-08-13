@@ -11,14 +11,18 @@ struct ContentView: View {
 
 //INSTANCE OF THE BMI CALCULATOR CLASS
 @State private var bmiCalc = bmiCalculator()
-
     var body: some View{
-    
-  
+        
+        Text("Your BMI is ")
+            .padding()
+        Text("Your BMI Category is ____")
+            .padding()
+        
         TextField("Height", text: $bmiCalc.inputHeight)
             .textFieldStyle(.roundedBorder)
             .disableAutocorrection(true)
-        
+            .keyboardType(.decimalPad)
+
         Picker("Enter height units", selection: $bmiCalc.selectedHeightUnit)
         {
             ForEach(bmiCalc.heightUnits, id: \.self){
@@ -29,6 +33,7 @@ struct ContentView: View {
         TextField("Weight", text: $bmiCalc.inputWeight)
                 .textFieldStyle(.roundedBorder)
                 .disableAutocorrection(true)
+                .keyboardType(.decimalPad)
         
         Picker("Enter weight units", selection: $bmiCalc.selectedWeightUnit)
         {
@@ -36,7 +41,16 @@ struct ContentView: View {
                 Text($0)
             }
         }.pickerStyle(.segmented)
-        
+
+        Button("Calculate"){
+            
+            
+            
+        }
+        .padding(.top)
+        .buttonBorderShape(.roundedRectangle)
+        .buttonStyle(BorderedProminentButtonStyle())
+
     }
     
     }

@@ -19,22 +19,30 @@ class bmiCalculator {
     var selectedWeightUnit = "kilos"
     
     
-    func calculateBMI( height: Double, weight:Double, weightUnit: String) -> Double
+   func calculateBMI(height: inout Double,  weight: inout Double, weightUnit: String, heightUnit: String) -> Double
     {
+        switch heightUnit {
+        case "ft":
+                height *= 12
+        case "cms":
+            height *= 0.393701
+        case "in":
+            fallthrough
+        default:
+            height = 1
+        }
+        
+        switch weightUnit {
+        case "kilos":
+            weight *= 2.20462
+        case "lbs":
+            fallthrough
+        default:
+            weight = 1
+        }
+        
         var bmi = 0.0
-        if(weightUnit == "kilos") {
-            
-            bmi = ((weight)/((height/100) * (height/100)))
-            bmi = round(bmi * 100)/100.0
-            
-        }
-        else if (weightUnit == "pounds")
-        {
-            
-            bmi = ((weight)/(height * height)) * 703
-            bmi = round(bmi * 100)/100.0
-            
-        }
+        bmi = (weight) / (height * height) * 703
         return bmi
     }
     
