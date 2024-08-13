@@ -29,12 +29,12 @@ class bmiCalculator {
     }
     
     var bmi:Double {
-            var bmi = calculateBMI(inputHeight: inputHeight, inputWeight: inputWeight, weightUnit: selectedWeightUnit, heightUnit: selectedHeightUnit)
+            let bmi = calculateBMI(inputHeight: inputHeight, inputWeight: inputWeight, weightUnit: selectedWeightUnit, heightUnit: selectedHeightUnit)
             return bmi
     }
     
     var bmiClass: String{
-        var bmiClass = bmiClass(bmi: bmi)
+        let bmiClass = bmiClass(bmi: bmi)
         return bmiClass
     }
 
@@ -69,22 +69,25 @@ class bmiCalculator {
     }
     
     
-    
-    func bmiClass(bmi:Double)-> String{
-        var bmiClass = ""
+    func bmiClass(bmi: Double) -> String {
         switch bmi {
-        case 0...18.5:
-            bmiClass = "Underweight"
-        case 18.5...24.9:
-            bmiClass = "Normal weight"
-        case 25...29.9:
-            bmiClass = "Overweight"
-        case 30...100:
-            bmiClass = "Obese"
+        case ..<0:
+            return "Invalid BMI"
+        case 0..<18.5:
+            return "Underweight"
+        case 18.5..<25:
+            return "Normal weight"
+        case 25..<30:
+            return "Overweight"
+        case 30..<35:
+            return "Obese Class I"
+        case 35..<40:
+            return "Obese Class II"
+        case 40...:
+            return "Obese Class III (Morbidly Obese)"
         default:
-            bmiClass = "NA"
+            return "NA"
         }
-        return bmiClass
     }
     
 }

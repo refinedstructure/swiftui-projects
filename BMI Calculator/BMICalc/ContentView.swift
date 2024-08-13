@@ -13,44 +13,63 @@ struct ContentView: View {
 @State private var bmiCalc = bmiCalculator()
     var body: some View{
         
-        Text("Your BMI is \(bmiCalc.bmi) ")
-            .padding()
-        Text("Your BMI Category is \(bmiCalc.bmiClass)")
-            .padding()
+        if bmiCalc.allDataEntered {
+                Text("Your BMI is \(bmiCalc.bmi) ")
+                    .padding()
+                    .animation(.spring, value: bmiCalc.bmi)
+                Text("Your BMI Category is \(bmiCalc.bmiClass)")
+                    .padding()
+                    .animation(.spring, value: bmiCalc.bmi)
+        }
+        else {
+            Text("Calculate Your BMI")
+                .padding()
+                .font(.title)
+            Text("Start by entering your height and weight")
+                .padding()
+                .font(.caption)
+        }
         
-        TextField("Height", text: $bmiCalc.inputHeight)
-            .textFieldStyle(.roundedBorder)
-            .disableAutocorrection(true)
-            .keyboardType(.decimalPad)
-
-        Picker("Enter height units", selection: $bmiCalc.selectedHeightUnit)
-        {
-            ForEach(bmiCalc.heightUnits, id: \.self){
-                Text($0)
-            }
-        }.pickerStyle(.segmented)
-        
-        TextField("Weight", text: $bmiCalc.inputWeight)
+        VStack {
+            TextField("Height", text: $bmiCalc.inputHeight)
                 .textFieldStyle(.roundedBorder)
                 .disableAutocorrection(true)
                 .keyboardType(.decimalPad)
+            
+            Picker("Enter height units", selection: $bmiCalc.selectedHeightUnit)
+            {
+                ForEach(bmiCalc.heightUnits, id: \.self){
+                    Text($0)
+                }
+            }.pickerStyle(.segmented)
+            
+            TextField("Weight", text: $bmiCalc.inputWeight)
+                .textFieldStyle(.roundedBorder)
+                .disableAutocorrection(true)
+                .keyboardType(.decimalPad)
+            
+            Picker("Enter weight units", selection: $bmiCalc.selectedWeightUnit)
+            {
+                ForEach(bmiCalc.weightUnits, id: \.self){
+                    Text($0)
+                }
+            }.pickerStyle(.segmented)
+        }
+        .padding()
         
-        Picker("Enter weight units", selection: $bmiCalc.selectedWeightUnit)
-        {
-            ForEach(bmiCalc.weightUnits, id: \.self){
-                Text($0)
+        HStack{
+            Button("Clear"){
+                bmiCalc.inputHeight = ""
+                bmiCalc.inputWeight = ""
             }
-        }.pickerStyle(.segmented)
-
-        Button("Calculate"){
-
+            .buttonStyle(BorderlessButtonStyle())
+//            Button("Save"){
+//                
+//            }
         }
         .padding(.top)
-        .buttonBorderShape(.roundedRectangle)
-        .buttonStyle(BorderedProminentButtonStyle())
-        .disabled(bmiCalc.allDataEntered)
+        
     }
-    
     }
 
 #Preview {
