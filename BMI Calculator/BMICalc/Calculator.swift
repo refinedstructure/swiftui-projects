@@ -8,9 +8,7 @@
 import Foundation
 
 @Observable
-
-class BMI {
-    
+class bmiCalculator {
     static let weightUnits = ["kilos", "lbs"]
     static let heightUnits = ["cms", "in"]
     
@@ -56,3 +54,5 @@ class BMI {
     }
     
 }
+
+
