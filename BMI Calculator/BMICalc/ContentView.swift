@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View{
         
         if bmiCalc.allDataEntered {
-                Text("Your BMI is \(bmiCalc.bmi) ")
+                Text("Your BMI is \(bmiCalc.bmi,specifier: "%.2f") ")
                     .padding()
                     .animation(.smooth, value: 100)
                     .font(.title)
