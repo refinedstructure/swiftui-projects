@@ -18,8 +18,26 @@ class bmiCalculator {
     var selectedHeightUnit = "cms"
     var selectedWeightUnit = "kilos"
     
-    var bmi = 0.0
-    var bmiClass = ""
+
+  
+    
+    var allDataEntered: Bool {
+        if inputHeight.isEmpty || inputWeight.isEmpty {
+            return false
+        }
+        return true
+    }
+    
+    var bmi:Double {
+            var bmi = calculateBMI(inputHeight: inputHeight, inputWeight: inputWeight, weightUnit: selectedWeightUnit, heightUnit: selectedHeightUnit)
+            return bmi
+    }
+    
+    var bmiClass: String{
+        var bmiClass = bmiClass(bmi: bmi)
+        return bmiClass
+    }
+
     
    func calculateBMI(inputHeight: String,  inputWeight: String, weightUnit: String, heightUnit: String) -> Double
     {

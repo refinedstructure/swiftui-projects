@@ -43,13 +43,12 @@ struct ContentView: View {
         }.pickerStyle(.segmented)
 
         Button("Calculate"){
-            bmiCalc.bmi = bmiCalc.calculateBMI(inputHeight: bmiCalc.inputHeight, inputWeight: bmiCalc.inputWeight, weightUnit: bmiCalc.selectedWeightUnit, heightUnit: bmiCalc.selectedHeightUnit)
-            bmiCalc.bmiClass = bmiCalc.bmiClass(bmi: bmiCalc.bmi)
+
         }
         .padding(.top)
         .buttonBorderShape(.roundedRectangle)
         .buttonStyle(BorderedProminentButtonStyle())
-
+        .disabled(bmiCalc.allDataEntered)
     }
     
     }
