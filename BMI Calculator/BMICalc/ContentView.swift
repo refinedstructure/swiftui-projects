@@ -13,9 +13,9 @@ struct ContentView: View {
 @State private var bmiCalc = bmiCalculator()
     var body: some View{
         
-        Text("Your BMI is ")
+        Text("Your BMI is \(bmiCalc.bmi) ")
             .padding()
-        Text("Your BMI Category is ____")
+        Text("Your BMI Category is \(bmiCalc.bmiClass)")
             .padding()
         
         TextField("Height", text: $bmiCalc.inputHeight)
@@ -43,9 +43,8 @@ struct ContentView: View {
         }.pickerStyle(.segmented)
 
         Button("Calculate"){
-            
-            
-            
+            bmiCalc.bmi = bmiCalc.calculateBMI(inputHeight: bmiCalc.inputHeight, inputWeight: bmiCalc.inputWeight, weightUnit: bmiCalc.selectedWeightUnit, heightUnit: bmiCalc.selectedHeightUnit)
+            bmiCalc.bmiClass = bmiCalc.bmiClass(bmi: bmiCalc.bmi)
         }
         .padding(.top)
         .buttonBorderShape(.roundedRectangle)
