@@ -22,3 +22,5 @@ class quoteCard: Identifiable {
         self.quoteAuthor = ""
     }
 }
+
+

@@ -9,6 +9,8 @@ import SwiftUI
 
 
 struct QuoteView: View {
+    @Environment(\.modelContext) private var context 
+    
     let selectedCategory: String
     @Binding var path: NavigationPath
     

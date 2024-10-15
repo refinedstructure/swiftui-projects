@@ -8,6 +8,8 @@
 import Foundation
 
 
+//TODO - Category data should be queried from the main db instead of a separate data model
+
 struct quoteCategories: Identifiable, Hashable {
     
     let id = UUID()
