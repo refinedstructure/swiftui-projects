@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4616D3D62CBE5D1800F2240C /* quote2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4616D3D52CBE5D1800F2240C /* quote2.swift */; };
+		4645F5892CC16D9D00B4924B /* AddQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4645F5882CC16D9D00B4924B /* AddQuoteView.swift */; };
 		469FDA282C33C9F000DAE4AC /* QuotecardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FDA272C33C9F000DAE4AC /* QuotecardsApp.swift */; };
 		469FDA2A2C33C9F000DAE4AC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469FDA292C33C9F000DAE4AC /* ContentView.swift */; };
 		469FDA2C2C33C9F100DAE4AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 469FDA2B2C33C9F100DAE4AC /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		4616D3D52CBE5D1800F2240C /* quote2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quote2.swift; sourceTree = "<group>"; };
+		4645F5882CC16D9D00B4924B /* AddQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuoteView.swift; sourceTree = "<group>"; };
 		469FDA242C33C9F000DAE4AC /* Quotecards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quotecards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		469FDA272C33C9F000DAE4AC /* QuotecardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotecardsApp.swift; sourceTree = "<group>"; };
 		469FDA292C33C9F000DAE4AC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				469FDA372C348A6000DAE4AC /* QuoteView.swift */,
 				469FDA3B2C348FEA00DAE4AC /* quote.swift */,
 				4616D3D52CBE5D1800F2240C /* quote2.swift */,
+				4645F5882CC16D9D00B4924B /* AddQuoteView.swift */,
 				469FDA392C348F5400DAE4AC /* quotes.json */,
 				469FDA352C33E24000DAE4AC /* quoteCategories.swift */,
 				469FDA2B2C33C9F100DAE4AC /* Assets.xcassets */,
@@ -154,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				469FDA2A2C33C9F000DAE4AC /* ContentView.swift in Sources */,
+				4645F5892CC16D9D00B4924B /* AddQuoteView.swift in Sources */,
 				469FDA282C33C9F000DAE4AC /* QuotecardsApp.swift in Sources */,
 				469FDA362C33E24000DAE4AC /* quoteCategories.swift in Sources */,
 				4616D3D62CBE5D1800F2240C /* quote2.swift in Sources */,
