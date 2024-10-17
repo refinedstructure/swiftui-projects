@@ -11,12 +11,23 @@ struct AddQuoteView: View {
     
     @State private var quoteText = ""
     @State private var quoteAuthor = ""
-
+    let categories = ["Books", "Movies"]
+    @State private var category = "Books"
+ // categories to be pulled from main db later.
     var body: some View {
         NavigationStack{
             Form{
-                Section{
+                Section("Your Quote"){
                     TextEditor(text: $quoteText)
+                }
+                Section("Quote Details"){
+                    TextField("Quote Author",text: $quoteAuthor)
+                    Picker("Quote Category",selection: $category){
+                        ForEach(categories, id:\.self) {
+                        Text($0)
+                        }
+                        
+                    }
                 }
             }
         }
