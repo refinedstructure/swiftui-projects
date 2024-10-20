@@ -16,7 +16,9 @@ struct BookmarkView: View {
         
 
             Button{
-                isBookmarked.toggle()
+                withAnimation{
+                    isBookmarked.toggle()
+                }
             }
             label: {
                 isBookmarked ? bookmarkOn : bookmarkOff
