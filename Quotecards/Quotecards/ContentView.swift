@@ -28,9 +28,10 @@ struct ContentView: View {
             ScrollView{
                 NavigationLink(destination: AddQuoteView()){
                     Image(systemName: "plus")
-                    Text("Add New Quote")
+                    Text("Add Quote")
                 }.foregroundStyle(.black)
-                    .padding()
+                    .position(x: 340, y: -20)
+
                 
                 LazyVGrid(columns: categoryColumns,spacing:20) {
                     ForEach(

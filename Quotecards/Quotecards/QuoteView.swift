@@ -28,8 +28,6 @@ struct QuoteView: View {
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:10) {
                 ForEach(allQuotes, id: \.id) { quote in
-                    
-          
                         ZStack{
                             VStack{
                                 Spacer()
@@ -48,7 +46,7 @@ struct QuoteView: View {
                             }
                         }
                     .frame(width:360, height:400)
-                    .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.red,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
+                    .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.yellow,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
                 }
             }
             Spacer()
