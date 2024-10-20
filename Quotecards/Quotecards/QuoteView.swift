@@ -10,7 +10,7 @@ import SwiftUI
 
 struct QuoteView: View {
     @Environment(\.modelContext) private var context 
-    
+    @State private var bookmarkEnabled = false
     let selectedCategory: String
     @Binding var path: NavigationPath
     
@@ -28,10 +28,25 @@ struct QuoteView: View {
         ScrollView(.horizontal){
             LazyHGrid(rows:rows, spacing:10) {
                 ForEach(allQuotes, id: \.id) { quote in
-                    VStack{
-                        Text(quote.quote).font(.title)
-                        Text("-- " + quote.author).font(.subheadline)
-                    }
+                    
+          
+                        ZStack{
+                            VStack{
+                                Spacer()
+                                Text(quote.quote).font(.title)
+                                Text("-- " + quote.author).font(.subheadline)
+                                Spacer()
+                            }
+                            VStack{
+                                Spacer()
+                                HStack{
+                                    Spacer()
+                                    BookmarkView(isBookmarked: $bookmarkEnabled)
+                                        .padding([.bottom, .trailing], 10)
+                             
+                                }
+                            }
+                        }
                     .frame(width:360, height:400)
                     .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.red,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
                 }
