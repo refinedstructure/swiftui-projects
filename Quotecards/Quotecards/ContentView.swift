@@ -20,9 +20,18 @@ struct ContentView: View {
         )
     ]
     var body: some View {
+        
+   
         NavigationStack(path: $path)
         {
+      
             ScrollView{
+                NavigationLink(destination: AddQuoteView()){
+                    Image(systemName: "plus")
+                    Text("Add New Quote")
+                }.foregroundStyle(.black)
+                    .padding()
+                
                 LazyVGrid(columns: categoryColumns,spacing:20) {
                     ForEach(
                         categories.categories,
