@@ -25,13 +25,15 @@ struct addCategoryView: View {
                 TextField("Icon", text: $icon)
                 TextField("Color", text: $baseColor)
             }
+       
             
             Button("Save") {
                 let newCategory = Category(name: name, descriptionText: descriptionText, icon: icon, baseColor: baseColor)
                 modelContext.insert(newCategory)
                 dismiss()
             }
-        } .navigationTitle("Add New Category")
+            .navigationTitle("Add New Category")
+        }
        
     }
 }

@@ -7,40 +7,37 @@
 
 import SwiftUI
 import SwiftData
-
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query var categories: [Category]
     @State private var showingAddCategory = false
     
+    @Query var categories: [Category]
+    
     var body: some View {
-        
-        
-        List(categories){ category in
-            HStack{
-                Image(systemName:category.icon)
-                Text(category.descriptionText)
-                Spacer()
-            }
-        }
-        .toolbar
-        {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    showingAddCategory.toggle()
-                }) {
-                    Label("Add Category", systemImage: "plus")
-                }
-                
-                .sheet(isPresented: $showingAddCategory){
-                    addCategoryView()
+        NavigationView {
+            List(categories) { category in
+                HStack {
+                    Image(systemName: category.icon)
+                    Text(category.descriptionText)
+                    Spacer()
                 }
             }
-            
-            
+            .navigationTitle("Quote Cards")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingAddCategory.toggle()
+                    }) {
+                        Label("Category", systemImage: "plus")
+                    }
+                }
+            }
         }
-        
+        .sheet(isPresented: $showingAddCategory) {
+            addCategoryView()
+        }
     }
+}
     
 //    func addCategories()
 //    {
@@ -61,7 +58,7 @@ struct ContentView: View {
 //        modelContext.insert(category4)
 //    }
     
-}
+//}
 #Preview {
     ContentView()
 }
