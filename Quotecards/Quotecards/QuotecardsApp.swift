@@ -15,6 +15,6 @@ struct QuotecardsApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for:QuoteCard.self)
+        .modelContainer(for:Category.self)
     }
 }

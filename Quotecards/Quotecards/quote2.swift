@@ -13,11 +13,11 @@ import SwiftUI
 class QuoteCard {
     var id: UUID
     var quoteText: String
-    var quoteCategory: String
+    var quoteCategory: Category?
     var quoteAuthor: String
     var quoteBookmarkStatus: Bool
     
-    init(quoteText: String, quoteCategory: String, quoteAuthor: String, quoteBookmarkStatus: Bool) {
+    init(quoteText: String, quoteCategory: Category? = nil, quoteAuthor: String, quoteBookmarkStatus: Bool) {
         self.id = UUID()
         self.quoteText = quoteText
         self.quoteCategory = quoteCategory

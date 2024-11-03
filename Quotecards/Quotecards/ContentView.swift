@@ -6,118 +6,62 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query var categories: [Category]
+    @State private var showingAddCategory = false
     
-    @State private var path = NavigationPath()
-    @State private var categories = QuoteCategoryData()
-    
-    let categoryColumns = [
-        GridItem(
-            .adaptive(
-                minimum: 200
-            )
-        )
-    ]
     var body: some View {
         
-   
-        NavigationStack(path: $path)
-        {
-      
-            ScrollView{
-                NavigationLink(destination: AddQuoteView()){
-                    Image(systemName: "plus")
-                    Text("Add Quote")
-                }.foregroundStyle(.black)
-                    .position(x: 340, y: -20)
-
-                
-                LazyVGrid(columns: categoryColumns,spacing:20) {
-                    ForEach(
-                        categories.categories,
-                        id: \.id
-                    ) { category in
-                        NavigationLink(value: category.name,
-                                       label: {
-                            VStack{
-                                Text(
-                                    category.name
-                                ).font(
-                                    .title.bold()
-                                ).padding()
-                                Image(
-                                    systemName:"\(category.icon)"
-                                ).resizable().scaledToFit().containerRelativeFrame(
-                                    .horizontal
-                                ) {
-                                    size,
-                                    axis in
-                                    size * 0.2
-                                }
-                                Text(
-                                    category.description
-                                ).font(
-                                    .caption
-                                ).padding(
-                                    .vertical
-                                ).foregroundColor(
-                                    .black
-                                )
-                            }
-                            
-                            .frame(
-                                width: 230,
-                                height: 190
-                            )
-                            .foregroundStyle(
-                                .black
-                            )
-                            .overlay(
-                                RoundedRectangle(
-                                    cornerRadius: 20
-                                ).frame(
-                                    width: 290,
-                                    height: 190,
-                                    alignment: .center
-                                ).foregroundStyle(
-                                    .gray.opacity(
-                                        0.3
-                                    )
-                                ).shadow(
-                                    radius: 5
-                                )
-                            )
-                        }
-                        )
-                    }
-                    Button("Random Category", systemImage: "shuffle"){
-                        path.append(categories.randomCategory())
-                    }
-                    .padding()
-                    .background(.gray.opacity(0.3))
-                    .foregroundStyle(.black)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                    
-                }
-                
-                .navigationDestination(
-                    for: String.self
-                ) { categoryStringValue in
-                    QuoteView(
-                        selectedCategory: categoryStringValue, path: $path
-                    )
-                }
-                .navigationTitle("Quotes").padding()
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbarBackground(.white)
-                //                .toolbar(.hidden, for: .navigationBar)
+        
+        List(categories){ category in
+            HStack{
+                Image(systemName:category.icon)
+                Text(category.descriptionText)
+                Spacer()
             }
         }
+        .toolbar
+        {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showingAddCategory.toggle()
+                }) {
+                    Label("Add Category", systemImage: "plus")
+                }
+                
+                .sheet(isPresented: $showingAddCategory){
+                    addCategoryView()
+                }
+            }
+            
+            
+        }
+        
     }
+    
+//    func addCategories()
+//    {
+//        do{
+//            try modelContext.delete(model: Category.self)
+//            }
+//            catch{
+//                print("Failed deletion")
+//            }
+//            
+//        let category1 = Category(name: "Movies", descriptionText: "Quotes from your favorite movies", icon: "popcorn", baseColor: "yellow")
+//        let category2 = Category(name: "Books", descriptionText: "Quotes from your favorite books", icon: "book", baseColor: "blue")
+//        let category3 = Category(name: "Music", descriptionText: "Quotes from your favorite music", icon: "music.note", baseColor: "red")
+//        let category4 = Category(name: "Sports", descriptionText: "Quotes from your favorite sports", icon: "football", baseColor: "green")
+//        modelContext.insert(category1)
+//        modelContext.insert(category2)
+//        modelContext.insert(category3)
+//        modelContext.insert(category4)
+//    }
+    
 }
-
 #Preview {
     ContentView()
 }

@@ -4,7 +4,7 @@
 //
 //  Created by Abhishek R on 03/07/24.
 //
-
+import SwiftData
 import SwiftUI
 
 
@@ -16,6 +16,14 @@ struct QuoteView: View {
     
 //    @State private var categories = QuoteCategoryData()
     @State private var allQuotes: [Quote] = []
+    @Query(
+        sort: [
+            SortDescriptor(\QuoteCard.quoteText),
+            SortDescriptor(\QuoteCard.quoteAuthor)
+        ]
+    )
+    
+    var quotes: [QuoteCard]
 
     let rows = [
         GridItem(.flexible())
