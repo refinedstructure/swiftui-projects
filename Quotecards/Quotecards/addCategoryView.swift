@@ -18,22 +18,27 @@ struct addCategoryView: View {
     
     var body: some View {
         
-        NavigationStack {
-            Form{
+            List{
                 TextField("Category Name", text: $name)
                 TextField("Description", text: $descriptionText)
                 TextField("Icon", text: $icon)
+                //                TODO- show sf symbols here
+                
                 TextField("Color", text: $baseColor)
+        
             }
+        Button("Save") {
+        let newCategory = Category(name: name, descriptionText: descriptionText, icon: icon, baseColor: baseColor)
+        modelContext.insert(newCategory)
+        dismiss()
+        }.buttonStyle(BorderedProminentButtonStyle())
+            .navigationTitle("New Category")
+        
+     
+       
        
             
-            Button("Save") {
-                let newCategory = Category(name: name, descriptionText: descriptionText, icon: icon, baseColor: baseColor)
-                modelContext.insert(newCategory)
-                dismiss()
-            }
-            .navigationTitle("Add New Category")
-        }
+
        
     }
 }

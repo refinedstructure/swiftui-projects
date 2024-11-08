@@ -33,11 +33,15 @@ struct ContentView: View {
                 }
             }
         }
-        .sheet(isPresented: $showingAddCategory) {
-            addCategoryView()
+        .sheet(isPresented: $showingAddCategory, content: {
+            NavigationStack {
+                addCategoryView()
+            }.presentationDetents([.medium])
+        })
+           
         }
     }
-}
+
     
 //    func addCategories()
 //    {
