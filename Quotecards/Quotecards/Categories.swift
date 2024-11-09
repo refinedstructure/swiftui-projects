@@ -12,13 +12,15 @@ import SwiftData
 class Category {
     var name: String
     var descriptionText: String
-    var icon: String = "quote.bubble"
-    var baseColor: String = "blue"
+    var icon: String
+    var baseColor: String
     
-    init(name: String, descriptionText: String, icon: String, baseColor: String) {
+    init(name: String, descriptionText: String, icon: String = "quote.bubble", baseColor: String = "blue") {
         self.name = name
         self.descriptionText = descriptionText
         self.icon = icon
         self.baseColor = baseColor
     }
 }
+
+let defaultCategory = Category(name: "My Quotes", descriptionText: "Default category for your own quotes", icon: "quote.bubble", baseColor: "blue")

@@ -5,7 +5,6 @@
 //  Created by Abhishek Rane on 15/10/24.
 //
 
-
 import SwiftData
 import Foundation
 
@@ -13,17 +12,17 @@ import Foundation
 class QuoteCard {
     var id: UUID
     var quoteText: String
-    var quoteCategory: Category?
+    var quoteCategory: Category
     var quoteAuthor: String
     var quoteBookmarkStatus: Bool
+    var quoteHidden: Bool
     
-    init(quoteText: String, quoteCategory: Category? = nil, quoteAuthor: String, quoteBookmarkStatus: Bool) {
-        self.id = UUID()
+    init(id: UUID = UUID(), quoteText: String, quoteCategory: Category = defaultCategory, quoteAuthor: String, quoteBookmarkStatus: Bool = false, quoteHidden: Bool = false) {
+        self.id = id
         self.quoteText = quoteText
         self.quoteCategory = quoteCategory
         self.quoteAuthor = quoteAuthor
         self.quoteBookmarkStatus = quoteBookmarkStatus
+        self.quoteHidden = quoteHidden
     }
 }
-
-
