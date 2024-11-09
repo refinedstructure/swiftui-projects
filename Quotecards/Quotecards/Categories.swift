@@ -12,8 +12,8 @@ import SwiftData
 class Category {
     var name: String
     var descriptionText: String
-    var icon: String
-    var baseColor: String
+    var icon: String = "quote.bubble"
+    var baseColor: String = "blue"
     
     init(name: String, descriptionText: String, icon: String, baseColor: String) {
         self.name = name

@@ -18,19 +18,37 @@ struct ContentView: View {
             List(categories) { category in
                 HStack {
                     Image(systemName: category.icon)
+                    Text(category.name)
                     Text(category.descriptionText)
-                    Spacer()
+                    
                 }
             }
             .navigationTitle("Quote Cards")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
+                    
+                    Button{
                         showingAddCategory.toggle()
-                    }) {
-                        Label("Category", systemImage: "plus")
+                        
+                    }label: {
+                        Image(systemName: "plus.circle")
+                        Text("Category")
                     }
+                    
+                    
                 }
+                ToolbarItem(placement: .navigationBarTrailing){
+                    Button{
+                        
+                    }
+                label:
+                    {
+                        Image(systemName: "plus.circle.fill")
+                        Text("Quote")
+                    }
+                    
+                }
+                
             }
         }
         .sheet(isPresented: $showingAddCategory, content: {
