@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var showingAddCategory = false
     @State private var showingAddQuote = false
 
-    @Query var categories: [Category]
+    @Query(sort: \Category.name) private var categories: [Category]
     
     var body: some View {
         NavigationView {
@@ -69,4 +69,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: Category.self, inMemory: true)
 }
