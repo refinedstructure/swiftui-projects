@@ -57,6 +57,11 @@ struct ContentView: View {
                 addCategoryView()
             }.presentationDetents([.medium])
         })
+        .sheet(isPresented: $showingAddQuote, content: {
+            NavigationStack{
+                addNewQuoteView()
+            }.presentationDetents([.medium])
+        })
            
         }
     }
