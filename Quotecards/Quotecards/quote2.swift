@@ -7,7 +7,7 @@
 
 
 import SwiftData
-import SwiftUI
+import Foundation
 
 @Model
 class QuoteCard {
@@ -25,4 +25,5 @@ class QuoteCard {
         self.quoteBookmarkStatus = quoteBookmarkStatus
     }
 }
+
 

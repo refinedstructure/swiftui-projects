@@ -17,30 +17,28 @@ struct addCategoryView: View {
     @State private var baseColor: String = ""
     
     var body: some View {
-        
-            List{
+        NavigationStack{
+            Form{
                 TextField("Category Name", text: $name)
                 TextField("Description", text: $descriptionText)
                 TextField("Icon", text: $icon)
                 //                TODO- show sf symbols here
-                
                 TextField("Color", text: $baseColor)
+                Button("Save") {
+                    let newCategory = Category(name: name, descriptionText: descriptionText, icon: icon, baseColor: baseColor)
+                    modelContext.insert(newCategory)
+                    dismiss()
+                    
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .buttonStyle(.borderedProminent)
+                .padding(.vertical)
+                .disabled(name.isEmpty || descriptionText.isEmpty)
+                .navigationTitle("New Category")
+                .navigationBarTitleDisplayMode(.inline)
+            }}
         
-            }
-        Button("Save") {
-        let newCategory = Category(name: name, descriptionText: descriptionText, icon: icon, baseColor: baseColor)
-        modelContext.insert(newCategory)
-        dismiss()
-        }.buttonStyle(BorderedProminentButtonStyle())
-            .navigationTitle("New Category")
-        
-     
-       
-       
-            
-
-       
-    }
+}
 }
 
 #Preview {
