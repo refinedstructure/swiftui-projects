@@ -15,7 +15,9 @@ struct ContentView: View {
     @State private var navigationPath = NavigationPath()
     
     var body: some View {
+
         NavigationView {
+      
             List(collection) { collection in
                 HStack {
                     NavigationLink{
@@ -24,11 +26,11 @@ struct ContentView: View {
                     label:{
                         Image(systemName: collection.icon)
                         Text(collection.name)
-                        Text(collection.descriptionText).foregroundStyle(.secondary)
+
                     }
                 }
             }
-            .navigationTitle("Quote Cards")
+            .navigationBarTitle("Quote Cards")
             .overlay{
                 if collection.isEmpty {
                     ContentUnavailableView{
@@ -46,6 +48,7 @@ struct ContentView: View {
                             modelContext.insert(newCategory2)
                             
                         }.buttonStyle(.borderedProminent)
+                            
                             
                         
                     }

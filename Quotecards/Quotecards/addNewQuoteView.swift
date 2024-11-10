@@ -11,8 +11,8 @@ import SwiftUI
 struct addNewQuoteView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
-    
-    
+    @Query private var collections: [Collection]
+    @State private var selectedCategory: Collection = defaultCategory
     @State private var quoteText:String = ""
     @State private var quoteAuthor:String = ""
     var body: some View {
@@ -20,8 +20,18 @@ struct addNewQuoteView: View {
             Form{
                 TextField("Quote", text: $quoteText)
                 TextField("Author", text: $quoteAuthor)
+                if !collections.isEmpty{
+                    Picker("Add to Collection", selection: $selectedCategory){
+                        ForEach(collections){collection in
+                            Text(collection.name)
+                        }
+                    }
+                    
+                }
+           
+                
                 Button("Save"){
-                    let newQuote = QuoteCard(quoteText: quoteText, quoteAuthor: quoteAuthor)
+                    let newQuote = QuoteCard(quoteText: quoteText,quoteCategory: selectedCategory, quoteAuthor: quoteAuthor)
                     modelContext.insert(newQuote)
                     dismiss()
                 }

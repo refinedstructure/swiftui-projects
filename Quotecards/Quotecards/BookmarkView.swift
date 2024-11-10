@@ -14,8 +14,6 @@ struct BookmarkView: View {
     var bookmarkOff = Image(systemName: "bookmark")
     
     var body: some View {
-        
-
             Button{
                 withAnimation{
                     isBookmarked.toggle()
