@@ -11,16 +11,20 @@ struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var showingAddCategory = false
     @State private var showingAddQuote = false
-
     @Query(sort: \Category.name) private var categories: [Category]
-    
+    @State private var navigationPath = NavigationPath()
+
     var body: some View {
         NavigationView {
             List(categories) { category in
                 HStack {
-                    Image(systemName: category.icon)
-                    Text(category.name)
-                    Text(category.descriptionText)
+                    NavigationLink{
+                        QuoteView(selectedCategory: category.name, path: $navigationPath)
+                    }
+                    label:{
+                        Image(systemName: category.icon)
+                        Text(category.descriptionText)
+                    }
                     
                 }
             }
