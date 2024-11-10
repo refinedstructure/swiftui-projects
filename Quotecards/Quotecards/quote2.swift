@@ -12,12 +12,12 @@ import Foundation
 class QuoteCard {
     var id: UUID
     var quoteText: String
-    var quoteCategory: Category
+    var quoteCategory: Collection
     var quoteAuthor: String
     var quoteBookmarkStatus: Bool
     var quoteHidden: Bool
     
-    init(id: UUID = UUID(), quoteText: String, quoteCategory: Category = defaultCategory, quoteAuthor: String, quoteBookmarkStatus: Bool = false, quoteHidden: Bool = false) {
+    init(id: UUID = UUID(), quoteText: String, quoteCategory: Collection = defaultCategory, quoteAuthor: String, quoteBookmarkStatus: Bool = false, quoteHidden: Bool = false) {
         self.id = id
         self.quoteText = quoteText
         self.quoteCategory = quoteCategory

@@ -11,24 +11,43 @@ struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @State private var showingAddCategory = false
     @State private var showingAddQuote = false
-    @Query(sort: \Category.name) private var categories: [Category]
+    @Query(sort: \Collection.name) private var collection: [Collection]
     @State private var navigationPath = NavigationPath()
 
     var body: some View {
         NavigationView {
-            List(categories) { category in
+            List(collection) { collection in
                 HStack {
                     NavigationLink{
-                        QuoteView(selectedCategory: category.name, path: $navigationPath)
+                        QuoteView(selectedCategory: collection.name, path: $navigationPath)
                     }
                     label:{
-                        Image(systemName: category.icon)
-                        Text(category.descriptionText)
+                        Image(systemName: collection.icon)
+                        Text(collection.name)
+                        Text(collection.descriptionText).foregroundStyle(.secondary)
                     }
-                    
                 }
             }
             .navigationTitle("Quote Cards")
+            .overlay{
+                if collection.isEmpty {
+                    ContentUnavailableView{
+                        Label("Add Your First Quote", systemImage: "quote.bubble")
+                    }
+                    description:{
+                        Text("Add your own quote or load hand-picked collections")
+                    }
+                    actions:{
+                        Button("Load Pre-Built Collections"){
+                            let newCategory = Collection(name: "Books", descriptionText: "Test", icon: "book.fill", baseColor: "red")
+                            modelContext.insert(newCategory)
+                            
+                        }.buttonStyle(.borderedProminent)
+                            
+                        
+                    }
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     
@@ -37,7 +56,7 @@ struct ContentView: View {
                         
                     }label: {
                         Image(systemName: "plus.circle")
-                        Text("Category")
+                        Text("Collection")
                     }
                     
                     
@@ -70,8 +89,7 @@ struct ContentView: View {
         }
     }
 
-
 #Preview {
     ContentView()
-        .modelContainer(for: Category.self, inMemory: true)
+        .modelContainer(for: Collection.self, inMemory: true)
 }

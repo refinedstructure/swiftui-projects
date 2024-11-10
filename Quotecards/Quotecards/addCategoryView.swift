@@ -48,7 +48,7 @@ struct addCategoryView: View {
                 .pickerStyle(.automatic)
                 
                 Button("Save") {
-                    let newCategory = Category(name: name, descriptionText: descriptionText, icon: selectedIcon, baseColor: selectedColor)
+                    let newCategory = Collection(name: name, descriptionText: descriptionText, icon: selectedIcon, baseColor: selectedColor)
                     modelContext.insert(newCategory)
                     dismiss()
                     

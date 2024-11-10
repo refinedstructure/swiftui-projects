@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Category {
+class Collection {
     var name: String
     var descriptionText: String
     var icon: String
@@ -23,4 +23,4 @@ class Category {
     }
 }
 
-let defaultCategory = Category(name: "My Quotes", descriptionText: "Default category for your own quotes", icon: "quote.bubble", baseColor: "blue")
+let defaultCategory = Collection(name: "My Quotes", descriptionText: "Default category for your own quotes", icon: "quote.bubble", baseColor: "blue")
