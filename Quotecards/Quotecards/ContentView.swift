@@ -13,7 +13,7 @@ struct ContentView: View {
     @State private var showingAddQuote = false
     @Query(sort: \Collection.name) private var collection: [Collection]
     @State private var navigationPath = NavigationPath()
-
+    
     var body: some View {
         NavigationView {
             List(collection) { collection in
@@ -39,8 +39,11 @@ struct ContentView: View {
                     }
                     actions:{
                         Button("Load Pre-Built Collections"){
-                            let newCategory = Collection(name: "Books", descriptionText: "Test", icon: "book.fill", baseColor: "red")
+                            let newCategory = Collection(name: "Books", descriptionText: "Quotes from the best books", icon: "book.fill", baseColor: "red")
+                            let newCategory2 = Collection(name: "Movies", descriptionText: "Quotes from the best movies", icon: "popcorn.fill", baseColor: "red")
+                            
                             modelContext.insert(newCategory)
+                            modelContext.insert(newCategory2)
                             
                         }.buttonStyle(.borderedProminent)
                             

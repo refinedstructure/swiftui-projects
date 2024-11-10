@@ -14,7 +14,6 @@ struct QuoteView: View {
     let selectedCategory: String
     @Binding var path: NavigationPath
     
-//    @State private var categories = QuoteCategoryData()
     @State private var allQuotes: [Quote] = []
     @Query(
         sort: [
