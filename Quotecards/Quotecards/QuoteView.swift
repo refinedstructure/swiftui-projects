@@ -60,10 +60,8 @@ struct QuoteView: View {
                             
                         }
                     
-//                        .overlay(RoundedRectangle(cornerRadius: 25).background(.linearGradient(colors:[.blue,.white], startPoint: .center, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal)
-                    /*                          .shadow(radius: 10)         */.frame(width:330, height:350, alignment:.center)
-                    
-                        .background(.linearGradient(colors:[.blue,.yellow,.green], startPoint: .top, endPoint: .bottom))
+                        .frame(width:330, height:350, alignment:.center)
+                        .background(.linearGradient(colors:[.gray,.white,.gray], startPoint: .top, endPoint: .bottom))
                         .cornerRadius(25)
                         .shadow(radius: 10)
                         .padding(.horizontal)
