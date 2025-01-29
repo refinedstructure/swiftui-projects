@@ -28,7 +28,6 @@ struct addNewQuoteView: View {
                     }
                     
                 }
-           
                 
                 Button("Save"){
                     let newQuote = QuoteCard(quoteText: quoteText,quoteCategory: selectedCategory, quoteAuthor: quoteAuthor)

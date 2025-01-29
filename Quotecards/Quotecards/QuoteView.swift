@@ -38,10 +38,16 @@ struct QuoteView: View {
                         ZStack{
                             VStack{
                                 Spacer()
-                                Text(quote.quote).font(.title)
+                                Text(quote.quote)
+                                    .font(.largeTitle)
+                                    .multilineTextAlignment(.center)
+                                    .fontDesign(.rounded)
                                 Text("-- " + quote.author).font(.subheadline)
+                                    .multilineTextAlignment(.center)
+
                                 Spacer()
                             }
+                            
                             VStack{
                                 Spacer()
                                 HStack{
@@ -51,9 +57,16 @@ struct QuoteView: View {
                              
                                 }
                             }
+                            
                         }
-                    .frame(width:360, height:400)
-                    .overlay(RoundedRectangle(cornerRadius: 20).background(.linearGradient(colors:[.yellow,.white], startPoint: .topLeading, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal).shadow(radius: 10)
+                    
+//                        .overlay(RoundedRectangle(cornerRadius: 25).background(.linearGradient(colors:[.blue,.white], startPoint: .center, endPoint: .bottomTrailing)).opacity(0.14)).padding(.horizontal)
+                    /*                          .shadow(radius: 10)         */.frame(width:330, height:350, alignment:.center)
+                    
+                        .background(.linearGradient(colors:[.blue,.yellow,.green], startPoint: .top, endPoint: .bottom))
+                        .cornerRadius(25)
+                        .shadow(radius: 10)
+                        .padding(.horizontal)
                 }
             }
             Spacer()
