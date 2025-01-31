@@ -17,43 +17,45 @@ struct ContentView: View {
     var body: some View {
 
         NavigationView {
-      
-            List(collection) { collection in
-                HStack {
-                    NavigationLink{
-                        QuoteView(selectedCategory: collection.name, path: $navigationPath)
-                    }
-                    label:{
-                        Image(systemName: collection.icon)
-                        Text(collection.name)
-
+            VStack{
+                List(collection) { collection in
+                    HStack {
+                        NavigationLink{
+                            QuoteView(selectedCategory: collection.name, path: $navigationPath)
+                        }
+                        label:{
+                            Image(systemName: collection.icon)
+                            Text(collection.name)
+                            
+                        }
                     }
                 }
-            }
-            .navigationBarTitle("Quote Cards")
-            .overlay{
-                if collection.isEmpty {
-                    ContentUnavailableView{
-                        Label("Add Your First Quote", systemImage: "quote.bubble")
+                .navigationBarTitle("Quote Cards")
+                
+                .overlay{
+                    if collection.isEmpty {
+                        ContentUnavailableView{
+                            Label("Add Your First Quote", systemImage: "quote.bubble")
+                        }
+                        description:{
+                            Text("Add your own quote or load hand-picked collections")
+                        }
+                        actions:{
+                            Button("Load Pre-Built Collections"){
+                                let newCategory = Collection(name: "Books", descriptionText: "Quotes from the best books", icon: "book.fill", baseColor: "red")
+                                let newCategory2 = Collection(name: "Movies", descriptionText: "Quotes from the best movies", icon: "popcorn.fill", baseColor: "red")
+                                
+                                modelContext.insert(newCategory)
+                                modelContext.insert(newCategory2)
+                                
+                            }
+                        }
                     }
-                    description:{
-                        Text("Add your own quote or load hand-picked collections")
-                    }
-                    actions:{
-                        Button("Load Pre-Built Collections"){
-                            let newCategory = Collection(name: "Books", descriptionText: "Quotes from the best books", icon: "book.fill", baseColor: "red")
-                            let newCategory2 = Collection(name: "Movies", descriptionText: "Quotes from the best movies", icon: "popcorn.fill", baseColor: "red")
-                            
-                            modelContext.insert(newCategory)
-                            modelContext.insert(newCategory2)
-                            
-                        }.buttonStyle(.borderedProminent)
-                            
-                            
-                        
-                    }
+                    
                 }
             }
+            .background(Color(UIColor.secondarySystemBackground))
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     
@@ -70,10 +72,13 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button{
                         showingAddQuote.toggle()
+                        
                     }
+
                 label:
                     {
                         Image(systemName: "plus.circle.fill")
+
                         Text("Quote")
                     }
                     
@@ -81,6 +86,8 @@ struct ContentView: View {
                 
             }
         }
+     
+
         .sheet(isPresented: $showingAddCategory, content: {
             NavigationStack {
                 addCategoryView()
@@ -91,8 +98,12 @@ struct ContentView: View {
                 addNewQuoteView()
             }.presentationDetents([.medium])
         })
-           
+        
         }
+    
+    
+      
+    
     }
 
 #Preview {

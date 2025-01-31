@@ -29,22 +29,22 @@ struct QuoteView: View {
     ]
     
     var body: some View {
+        
         VStack{
             Text("\(selectedCategory.uppercased()) QUOTES").font(.title2).foregroundStyle(.gray).shadow(radius: 10)
-        }.padding()
-        ScrollView(.horizontal){
-            LazyHGrid(rows:rows, spacing:10) {
-                ForEach(allQuotes, id: \.id) { quote in
+            
+            ScrollView(.horizontal){
+                LazyHGrid(rows:rows, spacing:10) {
+                    ForEach(allQuotes, id: \.id) { quote in
                         ZStack{
                             VStack{
                                 Spacer()
                                 Text(quote.quote)
-                                    .font(.largeTitle)
+                                    .font(.title)
                                     .multilineTextAlignment(.center)
                                     .fontDesign(.rounded)
-                                Text("-- " + quote.author).font(.subheadline)
+                                Text("-- " + quote.author).font(.caption)
                                     .multilineTextAlignment(.center)
-
                                 Spacer()
                             }
                             
@@ -54,24 +54,30 @@ struct QuoteView: View {
                                     Spacer()
                                     BookmarkView(isBookmarked: $bookmarkEnabled)
                                         .padding([.bottom, .trailing], 10)
-                             
+                                    
                                 }
                             }
                             
                         }
-                    
                         .frame(width:330, height:350, alignment:.center)
-                        .background(.linearGradient(colors:[.gray,.white,.gray], startPoint: .top, endPoint: .bottom))
-                        .cornerRadius(25)
-                        .shadow(radius: 10)
+                        .background(Color(UIColor.systemGray3))
+                        .cornerRadius(20)
+                        .shadow(color: Color.primary.opacity(0.7), radius: 10)
                         .padding(.horizontal)
+                    }
+                    
                 }
+                
+                Spacer()
+                
             }
-            Spacer()
-        }.onAppear{
-            allQuotes = decodeData(selectedCategory: selectedCategory)
+            .onAppear{
+                allQuotes = decodeData(selectedCategory: selectedCategory)
+            }
         }
+        .background(Color(UIColor.secondarySystemBackground).ignoresSafeArea())
     }
+    
 }
 
 #Preview {
