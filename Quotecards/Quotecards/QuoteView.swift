@@ -60,7 +60,10 @@ struct QuoteView: View {
                             
                         }
                         .frame(width:330, height:350, alignment:.center)
-                        .background(Color(UIColor.systemGray3))
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color(UIColor.systemGray2),Color(UIColor.systemGray6)]) , startPoint: .top, endPoint: .bottom)
+                            )
                         .cornerRadius(20)
                         .shadow(color: Color.primary.opacity(0.7), radius: 10)
                         .padding(.horizontal)
