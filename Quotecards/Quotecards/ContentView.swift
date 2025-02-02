@@ -35,13 +35,20 @@ struct ContentView: View {
                 .overlay{
                     if collection.isEmpty {
                         ContentUnavailableView{
-                            Label("Add Your First Quote", systemImage: "quote.bubble")
+                            Text("Add your first quote")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            Image("wallquote")
+                                .resizable()
+                                .frame(width: 250, height: 200)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                           
                         }
                         description:{
-                            Text("Add your own quote or load hand-picked collections")
+                            Text("Add your own quote or load hand-picked collections").font(.subheadline)
                         }
                         actions:{
-                            Button("Load Pre-Built Collections"){
+                            Button("Explore Existing Collections"){
                                 let newCategory = Collection(name: "Books", descriptionText: "Quotes from the best books", icon: "book.fill", baseColor: "red")
                                 let newCategory2 = Collection(name: "Movies", descriptionText: "Quotes from the best movies", icon: "popcorn.fill", baseColor: "red")
                                 
@@ -49,6 +56,7 @@ struct ContentView: View {
                                 modelContext.insert(newCategory2)
                                 
                             }
+                            .buttonStyle(BorderedButtonStyle()).tint(.black)
                         }
                     }
                     
