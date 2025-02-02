@@ -31,7 +31,7 @@ struct ContentView: View {
                     }
                 }
                 .navigationBarTitle("Quote Cards")
-                
+//                .toolbarVisibility(.hidden)
                 .overlay{
                     if collection.isEmpty {
                         ContentUnavailableView{
@@ -72,7 +72,9 @@ struct ContentView: View {
                         
                     }label: {
                         Image(systemName: "plus.circle")
+                            .foregroundStyle(.black)
                         Text("Collection")
+                            .tint(.black)
                     }
                     
                     
@@ -86,8 +88,9 @@ struct ContentView: View {
                 label:
                     {
                         Image(systemName: "plus.circle.fill")
-
+                            .foregroundStyle(.black)
                         Text("Quote")
+                            .tint(.black)
                     }
                     
                 }
