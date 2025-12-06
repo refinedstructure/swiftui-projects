@@ -2,10 +2,12 @@
 //  QuotecardsApp.swift
 //  Quotecards
 //
-//  Created by Abhishek Rane on 02/07/24.
+//  Created by Abhishek R on 02/07/24.
 //
 
 import SwiftUI
+import SwiftData
+
 
 @main
 struct QuotecardsApp: App {
@@ -13,5 +15,6 @@ struct QuotecardsApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for:Collection.self)
     }
 }

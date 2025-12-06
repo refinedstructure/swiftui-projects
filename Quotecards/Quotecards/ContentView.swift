@@ -2,72 +2,122 @@
 //  ContentView.swift
 //  Quotecards
 //
-//  Created by Abhishek Rane on 02/07/24.
+//  Created by Abhishek R on 02/07/24.
 //
 
 import SwiftUI
-
-
-
+import SwiftData
 struct ContentView: View {
-    var tv_Shows: quoteCategories
-        var movies: quoteCategories
-        var books: quoteCategories
-        var personalities: quoteCategories
-        var categories: [quoteCategories]
-    
-    init(){
-        self.tv_Shows = quoteCategories(name:"TV", description: "Quotes from your favorite TV shows", icon: "tv")
-        self.movies = quoteCategories(name: "Movies", description: "Quotes from your favorite movies", icon: "popcorn")
-        self.books = quoteCategories(name: "Books", description: "Quotes from your favorite books",icon: "book")
-        self.personalities = quoteCategories(name:"Personalities", description: "Quotes from famous people", icon: "person")
-        self.categories = [tv_Shows, movies, personalities, books ]
-    }
-
-    
-    let categoryColumns = [
-        GridItem(.flexible())
-        
-    ]
+    @Environment(\.modelContext) var modelContext
+    @State private var showingAddCategory = false
+    @State private var showingAddQuote = false
+    @Query(sort: \Collection.name) private var collection: [Collection]
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
-        
-        
-        NavigationStack {
-            ScrollView{
-                LazyVGrid(columns: categoryColumns, spacing: 15) {
-                    ForEach(categories, id: \.id) { category in
-                        NavigationLink{ QuoteView(selectedCategory: category.name)
-                        }label:
-                        {
-                            VStack{
-                                Text(category.name).font(.title).padding()
-                                Image(systemName:"\(category.icon)").resizable().frame(width:80, height:80).scaledToFit().padding()
-                                Text(category.description).font(.caption).padding()
-                                    .foregroundStyle(.black.opacity(0.7))
-                            }
-                            .frame(width: 250, height: 250)
-                            .clipShape(.rect(cornerRadius: 20))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10).stroke()).frame(width:250, height:250)
-                                .foregroundStyle(.black)
+
+        NavigationView {
+            VStack{
+                List(collection) { collection in
+                    HStack {
+                        NavigationLink{
+                            QuoteView(selectedCategory: collection.name, path: $navigationPath)
+                        }
+                        label:{
+                            Image(systemName: collection.icon)
+                            Text(collection.name)
+                            
                         }
                     }
                 }
-                .padding(.vertical)
-                .frame(maxWidth: .infinity)
-                .background(.ultraThickMaterial)
+                .navigationBarTitle("Quote Cards")
+//                .toolbarVisibility(.hidden)
+                .overlay{
+                    if collection.isEmpty {
+                        ContentUnavailableView{
+                            Text("Add your first quote")
+                                .font(.title)
+                                .fontWeight(.bold)
+                            Image("wallquote")
+                                .resizable()
+                                .frame(width: 250, height: 200)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                           
+                        }
+                        description:{
+                            Text("Add your own quote or load hand-picked collections").font(.subheadline)
+                        }
+                        actions:{
+                            Button("Explore Existing Collections"){
+                                let newCategory = Collection(name: "Books", descriptionText: "Quotes from the best books", icon: "book.fill", baseColor: "red")
+                                let newCategory2 = Collection(name: "Movies", descriptionText: "Quotes from the best movies", icon: "popcorn.fill", baseColor: "red")
+                                
+                                modelContext.insert(newCategory)
+                                modelContext.insert(newCategory2)
+                                
+                            }
+                            .buttonStyle(BorderedButtonStyle()).tint(.black)
+                        }
+                    }
+                    
+                }
+            }
+            .background(Color(UIColor.secondarySystemBackground))
+            
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    
+                    Button{
+                        showingAddCategory.toggle()
+                        
+                    }label: {
+                        Image(systemName: "plus.circle")
+                            .foregroundStyle(.black)
+                        Text("Collection")
+                            .tint(.black)
+                    }
+                    
+                    
+                }
+                ToolbarItem(placement: .navigationBarTrailing){
+                    Button{
+                        showingAddQuote.toggle()
+                        
+                    }
+
+                label:
+                    {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundStyle(.black)
+                        Text("Quote")
+                            .tint(.black)
+                    }
+                    
+                }
                 
             }
-            .navigationTitle("Quotes")
-            .background(.ultraThinMaterial)
-
-            
         }
-       
+     
+
+        .sheet(isPresented: $showingAddCategory, content: {
+            NavigationStack {
+                addCategoryView()
+            }.presentationDetents([.medium])
+        })
+        .sheet(isPresented: $showingAddQuote, content: {
+            NavigationStack{
+                addNewQuoteView()
+            }.presentationDetents([.medium])
+        })
+        
+        }
+    
+    
+      
+    
     }
-}
 
 #Preview {
     ContentView()
+        .modelContainer(for: Collection.self, inMemory: true)
 }
