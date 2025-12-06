@@ -1,9 +1,8 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+import Foundation
 
 @main
 struct HabitTracker {
     static func main() {
-        print("Hello, world!")
+       print("Welcome to habit tracker. Work in progress")
     }
 }
